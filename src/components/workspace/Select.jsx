@@ -1,5 +1,6 @@
 import { Check, ChevronDown } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
+import Popover from "./Popover.jsx";
 
 // A select in the site's look (the browser's own list can't be styled): a paper button and a
 // raised list under it. Keyboard: arrows, Home/End, Enter or Space to pick, Escape to close.
@@ -7,15 +8,16 @@ export default function Select({ id, value, options, onChange, swatch }) {
   const [open, setOpen] = useState(false);
   const [hi, setHi] = useState(0);
   const ref = useRef(null);
+  const list_ = useRef(null);
   const list = useId();
   const at = Math.max(0, options.findIndex((o) => o.value === value));
   useEffect(() => {
     if (!open) return;
-    const away = (e) => !ref.current?.contains(e.target) && setOpen(false);
+    const away = (e) => !ref.current?.contains(e.target) && !list_.current?.contains(e.target) && setOpen(false);
     window.addEventListener("pointerdown", away);
     return () => window.removeEventListener("pointerdown", away);
   }, [open]);
-  useEffect(() => { if (open) ref.current?.querySelector(`[data-i="${hi}"]`)?.scrollIntoView({ block: "nearest" }); }, [open, hi]);
+  useEffect(() => { if (open) list_.current?.querySelector(`[data-i="${hi}"]`)?.scrollIntoView({ block: "nearest" }); }, [open, hi]);
   const pick = (i) => { onChange(options[i].value); setOpen(false); ref.current?.querySelector("button")?.focus(); };
   function key(e) {
     const n = options.length;
@@ -34,6 +36,7 @@ export default function Select({ id, value, options, onChange, swatch }) {
         <Dot v={options[at]?.value} /><span>{options[at]?.label}</span><ChevronDown size={16} />
       </button>
       {open && (
+        <Popover anchor={ref} className="select-pop" onRef={(n) => { list_.current = n; }}>
         <ul id={list} role="listbox">
           {options.map((o, i) => (
             <li key={o.value} id={`${list}-${i}`} data-i={i} role="option" aria-selected={o.value === value}
@@ -42,6 +45,7 @@ export default function Select({ id, value, options, onChange, swatch }) {
             </li>
           ))}
         </ul>
+        </Popover>
       )}
     </div>
   );

@@ -1,6 +1,7 @@
 import { Pipette } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { parseHex, toHex, toHsv } from "../../lib/color.js";
+import Popover from "./Popover.jsx";
 
 // Drags a pointer over an element: fn gets x and y as 0–1 of its box, on press and on every move.
 function track(e, el, fn) {
@@ -17,7 +18,7 @@ function track(e, el, fn) {
 
 // The site's own colour picker (not the browser's): a saturation and brightness square, a hue
 // strip, the hex, and quick swatches. Changes apply as you drag; arrows nudge the square.
-export default function ColorPicker({ value, swatches = [], labels, onChange, onClose }) {
+export default function ColorPicker({ anchor, value, swatches = [], labels, onChange, onClose }) {
   const [hsv, setHsv] = useState(() => toHsv(value));
   const [text, setText] = useState(value);
   const box = useRef(null);
@@ -40,7 +41,8 @@ export default function ColorPicker({ value, swatches = [], labels, onChange, on
   }
   const pure = toHex({ h: hsv.h, s: 1, v: 1 });
   return (
-    <div className="picker" ref={root} onKeyDown={keys}>
+    <Popover anchor={anchor} width={260} className="picker" onRef={(n) => { root.current = n; }}>
+    <div onKeyDown={keys} className="picker-body">
       <div ref={box} className="picker-sv" tabIndex={0} role="slider" aria-label={labels.shade} aria-valuetext={text}
         style={{ backgroundColor: pure }} onPointerDown={(e) => track(e, box.current, (x, y) => set({ ...hsv, s: x, v: 1 - y }))}>
         <span className="picker-dot" style={{ left: `${hsv.s * 100}%`, top: `${(1 - hsv.v) * 100}%`, backgroundColor: toHex(hsv) }} />
@@ -65,5 +67,6 @@ export default function ColorPicker({ value, swatches = [], labels, onChange, on
         </div>
       )}
     </div>
+    </Popover>
   );
 }

@@ -6,12 +6,16 @@
 .select > button span { flex: 1; } .select > button svg { color: var(--muted); transition: rotate .2s; }
 .select > button:hover { box-shadow: var(--shadow-lg); }
 .select.open > button svg { rotate: 180deg; }
-.select ul { position: absolute; z-index: 30; inset-inline: 0; top: calc(100% + 6px); margin: 0; padding: 6px; list-style: none; background: var(--paper);
-  border-radius: 14px; box-shadow: var(--shadow-lg); max-height: 260px; overflow: auto; animation: pop .14s ease-out; }
-.select li { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 10px; cursor: pointer; font-size: 15px; }
-.select li span { flex: 1; } .select li svg { color: var(--coral-ink); }
-.select li.hi { background: var(--sand); }
-.select li[aria-selected=true] { font-weight: 700; }
+/* floating boxes (Popover.jsx): above everything on the page */
+.popover { position: fixed; z-index: 80; background: var(--paper); border-radius: 14px; box-shadow: var(--shadow-lg), 0 24px 50px rgba(32, 33, 31, .16);
+  animation: pop .14s ease-out; font-family: Vazirmatn, sans-serif; color: var(--ink); }
+.popover.up { animation-name: pop-up; }
+@keyframes pop-up { from { opacity: 0; transform: translateY(4px); } }
+.select-pop ul { margin: 0; padding: 6px; list-style: none; max-height: 260px; overflow: auto; }
+.select-pop li { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 10px; cursor: pointer; font-size: 15px; }
+.select-pop li span { flex: 1; } .select-pop li svg { color: var(--coral-ink); }
+.select-pop li.hi { background: var(--sand); }
+.select-pop li[aria-selected=true] { font-weight: 700; }
 .swatch { width: 16px; height: 16px; border-radius: 5px; flex: none; box-shadow: inset 0 0 0 1px rgba(32, 33, 31, .12); }
 .sw-paper { background: var(--paper); } .sw-sand { background: var(--sand); } .sw-accent-soft { background: var(--coral-soft); }
 .sw-blue { background: var(--blue-soft); } .sw-green { background: var(--green-soft); }
@@ -63,8 +67,7 @@
 .palette.on { box-shadow: 0 0 0 2px var(--ink); }
 .palette small { font-size: 12px; font-weight: 600; }
 .stripes { display: flex; height: 22px; border-radius: 7px; overflow: hidden; } .stripes i { flex: 1; }
-.picker { flex: 1 0 100%; width: 100%; margin-top: 4px; padding: 12px; background: var(--paper);
-  border-radius: 16px; box-shadow: var(--shadow-lg); display: grid; gap: 10px; animation: pop .14s ease-out; }
+.picker { padding: 12px; border-radius: 16px; } .picker-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
 .picker-sv { position: relative; height: 150px; border-radius: 10px; cursor: crosshair; touch-action: none;
   background-image: linear-gradient(to top, #000, transparent), linear-gradient(to right, #fff, transparent); }
 .picker-hue { position: relative; height: 14px; border-radius: 7px; cursor: pointer; touch-action: none;
@@ -75,8 +78,8 @@
 .picker-row { display: flex; gap: 8px; align-items: center; }
 .picker-now { width: 34px; height: 34px; border-radius: 9px; flex: none; box-shadow: inset 0 0 0 1px rgba(32, 33, 31, .12); }
 .picker-row input { flex: 1; min-width: 0; border: 0; border-radius: 9px; background: var(--sand); padding: 7px 10px; font: 14px JBM, monospace; color: var(--ink); }
-.picker-swatches { display: grid; grid-template-columns: repeat(8, 1fr); gap: 5px; }
-.picker-swatches button { aspect-ratio: 1; border: 0; border-radius: 6px; cursor: pointer; box-shadow: inset 0 0 0 1px rgba(32, 33, 31, .1); }
+.picker-swatches { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 5px; }
+.picker-swatches button { aspect-ratio: 1; border: 0; padding: 0; min-width: 0; border-radius: 6px; cursor: pointer; box-shadow: inset 0 0 0 1px rgba(32, 33, 31, .1); }
 .picker-swatches button.on { box-shadow: 0 0 0 2px var(--paper), 0 0 0 3px var(--ink); }
 
 /* the export menu */

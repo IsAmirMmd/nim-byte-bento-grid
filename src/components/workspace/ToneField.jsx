@@ -1,5 +1,5 @@
 import { Plus } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { themeOf, PALETTES } from "../../skill/tiles.js";
 import { HEX } from "../../lib/color.js";
 import ColorPicker from "./ColorPicker.jsx";
@@ -14,6 +14,7 @@ const READY = [...new Set(Object.values(PALETTES).map((p) => p[2]))];
 // A tile's colour: the palette's tones as swatches, or any colour from the picker.
 export default function ToneField({ id, value, theme, names, labels, onChange }) {
   const [open, setOpen] = useState(false);
+  const more = useRef(null);
   const custom = HEX.test(value);
   return (
     <div className="tones" id={id} role="radiogroup">
@@ -21,11 +22,11 @@ export default function ToneField({ id, value, theme, names, labels, onChange })
         <button key={t} type="button" role="radio" aria-checked={value === t} aria-label={names[t]} title={names[t]}
           className={`tone${value === t ? " on" : ""}`} style={{ backgroundColor: toneColor(t, theme) }} onClick={() => onChange(t)} />
       ))}
-      <button type="button" data-picker-trigger role="radio" aria-checked={custom} title={labels.custom} aria-label={labels.custom}
+      <button ref={more} type="button" data-picker-trigger role="radio" aria-checked={custom} title={labels.custom} aria-label={labels.custom}
         className={`tone more${custom ? " on" : ""}`} style={custom ? { backgroundColor: value } : undefined} onClick={() => setOpen((o) => !o)}>
         {!custom && <Plus size={16} />}
       </button>
-      {open && <ColorPicker value={custom ? value : toneColor(value, theme)} swatches={[...shades(theme), ...READY]} labels={labels}
+      {open && <ColorPicker anchor={more} value={custom ? value : toneColor(value, theme)} swatches={[...shades(theme), ...READY]} labels={labels}
         onChange={onChange} onClose={() => setOpen(false)} />}
     </div>
   );
