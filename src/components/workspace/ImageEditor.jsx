@@ -51,7 +51,7 @@ export default function ImageEditor({ tile, field, uploads, x, onData }) {
       </div>
       <div className="field">
         <label htmlFor={`z-${tile.key}`}>{x.zoom} <output>{Math.round((d.zoom ?? 1) * 100)}%</output></label>
-        <input id={`z-${tile.key}`} type="range" min="1" max="3" step="0.05" value={d.zoom ?? 1} onChange={(e) => set({ zoom: Number(e.target.value) === 1 ? undefined : Number(e.target.value) })} />
+        <input id={`z-${tile.key}`} type="range" min="0.05" max="2" step="0.05" value={d.zoom ?? 1} onChange={(e) => set({ zoom: Number(e.target.value) === 1 ? undefined : Number(e.target.value) })} />
       </div>
       <div className="field"><label>{x.fit}</label><Segments name={x.fit} value={fit} options={["cover", "contain"]} labels={x} onPick={(v) => set({ fit: v })} /></div>
       <div className="field"><label>{x.mask}</label><Segments name={x.mask} value={d.mask ?? "rounded"} options={MASKS} labels={x} onPick={(v) => set({ mask: v === "rounded" ? undefined : v })} /></div>
