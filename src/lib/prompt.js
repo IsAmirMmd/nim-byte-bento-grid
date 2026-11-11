@@ -11,7 +11,11 @@ export function pictures(profile, origin, uploaded) {
   };
   add(profile.image?.src, "the picture tile");
   (profile.projects ?? []).forEach((p) => add(p.image, `the screenshot of "${p.title}"`));
-  (profile.blocks ?? []).forEach((b) => b.type === "photo" && add(b.src, "a photo tile"));
+  (profile.blocks ?? []).forEach((b) => {
+    if (b.type === "photo") add(b.src, "a photo tile");
+    if (b.type === "music") add(b.cover, `the cover of "${b.title}"`);
+    if (b.type === "video") add(b.thumb, `the thumbnail of "${b.title}"`);
+  });
   return out;
 }
 

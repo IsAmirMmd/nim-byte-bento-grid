@@ -226,6 +226,12 @@
     ],
     [
       {
+        "id": "block-1",
+        "width": 1000
+      }
+    ],
+    [
+      {
         "id": "contact-1",
         "width": 180
       },
@@ -246,5 +252,17 @@
         "width": 270
       }
     ]
+  ],
+  "blocks": [
+    {
+      "type": "music",
+      "label": "On repeat",
+      "title": "Let It Happen",
+      "artist": "Tame Impala · Currents",
+      "cover": "images/currents.jpg",
+      "duration": 467,
+      "source": "Spotify",
+      "href": "https://open.spotify.com/track/2X485T9Z5Ly0xyaghN73ed"
+    }
   ]
 }
