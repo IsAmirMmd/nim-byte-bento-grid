@@ -67,7 +67,7 @@ export default function Field({ tile, spec, lang, t, theme, uploads, onData, onI
         <Upload size={16} /><span>{tile.data[name] ? tile.data[name].replace(/^images\//, "") : words.upload}</span>
         <input id={id} type="file" accept="image/*" onChange={(e) => e.target.files[0] && onImage(name, e.target.files[0])} />
       </label>
-      {tile.data[name] && <ImageEditor tile={tile} field={name} uploads={uploads} x={t.img} onData={onData} />}
+      {tile.data[name] && <ImageEditor tile={tile} field={name} uploads={uploads} x={t.img} theme={theme} tones={TONE_TEXT[lang]} colors={t.color} onData={onData} />}
     </>
   );
   else input = <input id={id} dir={type === "num" || type === "clock" ? "ltr" : "auto"} inputMode={type === "num" ? "numeric" : undefined}

@@ -37,11 +37,15 @@
 .ctx-menu button.danger, .ctx-menu button.danger svg { color: var(--coral-ink); }
 
 .img-edit { display: grid; gap: 10px; margin-top: 8px; background: var(--paper); border-radius: 14px; padding: 10px; }
-.img-stage { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--sand); cursor: move; touch-action: none; border-radius: 12px; }
+/* the preview keeps one size; the mask is a shape inside it */
+.img-stage { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--sand); cursor: move; touch-action: none; border-radius: 12px;
+  padding: 10px; display: grid; place-items: center; container-type: size; }
 .img-stage.tall { aspect-ratio: 4 / 5; }
-.img-stage img { width: 100%; height: 100%; display: block; pointer-events: none; user-select: none; }
-.img-stage.mask-square { border-radius: 0; } .img-stage.mask-circle { border-radius: 50%; aspect-ratio: 1; }
-.img-stage.mask-arch { border-radius: 999px 999px 12px 12px; aspect-ratio: 4 / 5; }
+.img-mask { position: relative; overflow: hidden; width: 100%; height: 100%; border-radius: 10px; background: rgba(32, 33, 31, .06); }
+.img-mask img { width: 100%; height: 100%; display: block; pointer-events: none; user-select: none; }
+.img-mask.mask-square { border-radius: 0; }
+.img-mask.mask-circle { width: min(100cqw, 100cqh); height: auto; aspect-ratio: 1; border-radius: 50%; }
+.img-mask.mask-arch { width: auto; height: min(100cqh, 125cqw); aspect-ratio: 4 / 5; border-radius: 999px 999px 10px 10px; }
 .img-hint { position: absolute; bottom: 8px; inset-inline-start: 8px; display: inline-flex; gap: 6px; align-items: center; padding: 3px 9px;
   border-radius: 8px; background: rgba(32, 33, 31, .72); color: var(--cream); font-size: 12px; pointer-events: none; }
 

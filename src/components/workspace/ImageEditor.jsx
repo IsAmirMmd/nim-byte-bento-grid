@@ -1,9 +1,11 @@
 import { Move, RotateCcw } from "lucide-react";
 import { useRef } from "react";
 import { picture } from "../../lib/render.js";
+import ToneField from "./ToneField.jsx";
 
 const MASKS = ["rounded", "square", "circle", "arch"];
-const CAPS = ["below", "top-right", "top-left", "bottom-right", "bottom-left"];
+const CORNERS = ["top-right", "top-left", "bottom-right", "bottom-left"];
+const CAPS = ["below", ...CORNERS];
 const parse = (pos = "50% 50%") => pos.split(" ").map((v) => parseFloat(v));
 const clamp = (v) => Math.round(Math.min(100, Math.max(0, v)));
 
@@ -18,8 +20,9 @@ function Segments({ name, value, options, labels, onPick }) {
 }
 
 // The picture's crop, in the panel: drag the preview to move the picture in its frame, zoom it,
-// pick how it fills (cover or contain) and its mask, and where the caption sits.
-export default function ImageEditor({ tile, field, uploads, x, onData }) {
+// pick how it fills (cover or contain) and its mask, where the caption sits and its ground. The
+// preview keeps its size: the mask is drawn inside it.
+export default function ImageEditor({ tile, field, uploads, x, theme, tones, colors, onData }) {
   const d = tile.data;
   const ref = useRef(null);
   const fit = d.fit ?? (tile.kind === "image" ? "contain" : "cover");
@@ -43,10 +46,15 @@ export default function ImageEditor({ tile, field, uploads, x, onData }) {
   const src = picture(d[field], uploads);
   const pos = d.pos ?? "50% 50%";
   const caps = tile.kind !== "project";
+  // a caption has a ground by default in a corner and on a photo, and none below the picture
+  const grounded = tile.kind === "photo" || CORNERS.includes(d.capPos);
+  const capOn = d.capBg ? d.capBg !== "none" : grounded;
   return (
     <div className="img-edit">
-      <div ref={ref} className={`img-stage mask-${d.mask ?? "rounded"}${tile.kind === "photo" ? " tall" : ""}`} onPointerDown={drag}>
-        <img src={src} alt="" draggable="false" style={{ objectFit: fit, objectPosition: pos, transform: `scale(${d.zoom ?? 1})`, transformOrigin: pos }} />
+      <div className={`img-stage${tile.kind === "photo" ? " tall" : ""}`} onPointerDown={drag}>
+        <div ref={ref} className={`img-mask mask-${d.mask ?? "rounded"}`}>
+          <img src={src} alt="" draggable="false" style={{ objectFit: fit, objectPosition: pos, transform: `scale(${d.zoom ?? 1})`, transformOrigin: pos }} />
+        </div>
         <span className="img-hint"><Move size={14} />{x.drag}</span>
       </div>
       <div className="field">
@@ -56,7 +64,18 @@ export default function ImageEditor({ tile, field, uploads, x, onData }) {
       <div className="field"><label>{x.fit}</label><Segments name={x.fit} value={fit} options={["cover", "contain"]} labels={x} onPick={(v) => set({ fit: v })} /></div>
       <div className="field"><label>{x.mask}</label><Segments name={x.mask} value={d.mask ?? "rounded"} options={MASKS} labels={x} onPick={(v) => set({ mask: v === "rounded" ? undefined : v })} /></div>
       {caps && <div className="field"><label>{x.capPos}</label><Segments name={x.capPos} value={d.capPos ?? "below"} options={CAPS} labels={x} onPick={(v) => set({ capPos: v === "below" ? undefined : v })} /></div>}
-      <button type="button" className="btn ghost small" onClick={() => set({ fit: undefined, pos: undefined, zoom: undefined, mask: undefined, capPos: undefined })}><RotateCcw size={14} />{x.reset}</button>
+      {caps && d.caption && (
+        <div className="field">
+          <label>{x.capBg}</label>
+          <Segments name={x.capBg} value={capOn ? "on" : "none"} options={["none", "on"]} labels={{ none: x.capNone, on: x.capOn }}
+            onPick={(v) => set({ capBg: v === "on" ? (grounded ? undefined : "paper") : (grounded ? "none" : undefined) })} />
+          {capOn && (
+            <ToneField id={`cb-${tile.key}`} value={d.capBg && d.capBg !== "none" ? d.capBg : "paper"} theme={theme} names={tones} labels={colors}
+              onChange={(v) => set({ capBg: v === "paper" && grounded ? undefined : v })} />
+          )}
+        </div>
+      )}
+      <button type="button" className="btn ghost small" onClick={() => set({ fit: undefined, pos: undefined, zoom: undefined, mask: undefined, capPos: undefined, capBg: undefined })}><RotateCcw size={14} />{x.reset}</button>
     </div>
   );
 }
