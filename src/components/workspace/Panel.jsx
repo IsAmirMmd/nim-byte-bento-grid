@@ -1,8 +1,9 @@
-import { Trash2, X } from "lucide-react";
+import { Languages, Trash2, X } from "lucide-react";
+import GithubMark from "../GithubMark.jsx";
 import { useState } from "react";
 import { KIND_TEXT, PALETTE_TEXT } from "../../i18n.js";
 import { FIELDS } from "./fields.js";
-import Field from "./Field.jsx";
+import Field, { IconInput } from "./Field.jsx";
 import ThemeField from "./ThemeField.jsx";
 import { ICONS } from "./Library.jsx";
 import Select from "./Select.jsx";
@@ -14,9 +15,11 @@ export default function Panel({ t, lang, model, tile, width, uploads, onData, on
     <div className="panel">
       <span className="label"><i />{t.ws.settings}</span>
       <div className="field"><label htmlFor="s-github">{t.ws.github}</label>
-        <input id="s-github" dir="ltr" placeholder="your-username" value={model.github} onChange={(e) => onSettings({ github: e.target.value.trim() })} /></div>
+        <IconInput icon={GithubMark}>
+          <input id="s-github" className="bare" dir="ltr" placeholder="your-username" value={model.github} onChange={(e) => onSettings({ github: e.target.value.trim() })} />
+        </IconInput></div>
       <div className="field"><label htmlFor="s-lang">{t.ws.readmeLang}</label>
-        <Select id="s-lang" value={model.lang} onChange={(v) => onSettings({ lang: v })}
+        <Select id="s-lang" icon={Languages} value={model.lang} onChange={(v) => onSettings({ lang: v })}
           options={[{ value: "fa", label: "فارسی (راست به چپ)" }, { value: "en", label: "English (left to right)" }]} /></div>
       <ThemeField theme={model.theme} names={PALETTE_TEXT[lang]} labels={t.color} onChange={(theme) => onSettings({ theme })} />
       <label className="check"><input type="checkbox" checked={model.stats} onChange={(e) => onSettings({ stats: e.target.checked })} />{t.ws.stats}</label>

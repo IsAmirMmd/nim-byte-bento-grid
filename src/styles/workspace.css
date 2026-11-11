@@ -78,7 +78,7 @@ body { overflow-anchor: none; }
 .panel-head { display: flex; align-items: center; gap: 10px; } .panel-head b { flex: 1; font-size: 17px; }
 .field { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; }
 .field label { font-size: 13px; font-weight: 600; color: var(--muted); display: flex; justify-content: space-between; }
-.field input:not([type=range]):not([type=file]):not(.bare), .field select, .field textarea, .prompt textarea {
+.field input:not([type=range]):not([type=file]):not(.bare), .field select, .field textarea:not(.bare), .prompt textarea {
   width: 100%; border: 0; border-radius: 12px; background: var(--paper); padding: 9px 12px; font: inherit; color: inherit; }
 .field textarea { resize: vertical; line-height: 1.6; }
 .field input[type=range] { accent-color: var(--coral); }

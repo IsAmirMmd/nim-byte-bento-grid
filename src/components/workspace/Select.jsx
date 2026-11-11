@@ -4,7 +4,7 @@ import Popover from "./Popover.jsx";
 
 // A select in the site's look (the browser's own list can't be styled): a paper button and a
 // raised list under it. Keyboard: arrows, Home/End, Enter or Space to pick, Escape to close.
-export default function Select({ id, value, options, onChange, swatch }) {
+export default function Select({ id, value, options, onChange, swatch, icon: Icon }) {
   const [open, setOpen] = useState(false);
   const [hi, setHi] = useState(0);
   const ref = useRef(null);
@@ -33,7 +33,7 @@ export default function Select({ id, value, options, onChange, swatch }) {
     <div className={`select${open ? " open" : ""}`} ref={ref} onKeyDown={key}>
       <button id={id} type="button" role="combobox" aria-expanded={open} aria-controls={list} aria-haspopup="listbox"
         aria-activedescendant={open ? `${list}-${hi}` : undefined} onClick={() => { setOpen((o) => !o); setHi(at); }}>
-        <Dot v={options[at]?.value} /><span>{options[at]?.label}</span><ChevronDown size={16} />
+        {Icon && <Icon size={16} className="select-icon" aria-hidden="true" />}<Dot v={options[at]?.value} /><span>{options[at]?.label}</span><ChevronDown size={16} />
       </button>
       {open && (
         <Popover anchor={ref} className="select-pop" onRef={(n) => { list_.current = n; }}>
