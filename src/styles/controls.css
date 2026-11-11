@@ -111,3 +111,13 @@ input[type=range]:focus-visible { outline: 0; } input[type=range]:focus-visible:
 .ctx-menu button[aria-disabled]:hover { background: none; }
 .bc .wrap.flash .tile-html > .tile { animation: flash 1.4s ease-out; }
 @keyframes flash { 0%, 30% { box-shadow: 0 0 0 4px var(--coral), var(--shadow-lg); } 100% { box-shadow: 0 0 0 3px var(--coral), var(--shadow-lg); } }
+
+/* a link's input: the icon on its left, and the fill button inside it */
+.link-input { display: flex; align-items: center; gap: 8px; background: var(--paper); border-radius: 12px; padding-inline: 12px 4px; }
+.link-input > svg { color: var(--muted); flex: none; }
+.link-input input { flex: 1; min-width: 0; border: 0; background: none; padding: 9px 0; outline: 0; font-family: JBM, ui-monospace, monospace; font-size: 14px; }
+.link-input:focus-within { box-shadow: 0 0 0 2px var(--coral-ink); }
+.link-input .btn { margin-block: 4px; padding: 6px 12px; font-size: 13px; }
+.link-input input::placeholder { font-family: Vazirmatn, sans-serif; }
+.field input::placeholder, .field textarea::placeholder { color: var(--muted); opacity: .6; }
+.field-error { margin: 2px 0 0; color: var(--coral-ink); font-size: 13px; }

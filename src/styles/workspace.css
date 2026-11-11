@@ -74,11 +74,11 @@ body { overflow-anchor: none; }
 .drag-overlay .tile-html > .tile { box-shadow: var(--shadow-lg), 0 30px 60px rgba(32, 33, 31, .18); transform: rotate(-1.2deg) scale(1.03); transition: transform .2s; }
 
 /* the panel */
-.panel { background: var(--cream); border-radius: 20px; padding: 16px; display: grid; gap: 10px; position: sticky; top: 12px; max-height: calc(100vh - 24px); overflow: auto; }
+.panel { background: var(--cream); border-radius: 20px; padding: 16px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; position: sticky; top: 12px; max-height: calc(100vh - 24px); overflow: auto; }
 .panel-head { display: flex; align-items: center; gap: 10px; } .panel-head b { flex: 1; font-size: 17px; }
-.field { display: grid; gap: 4px; }
+.field { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; }
 .field label { font-size: 13px; font-weight: 600; color: var(--muted); display: flex; justify-content: space-between; }
-.field input:not([type=range]):not([type=file]), .field select, .field textarea, .prompt textarea {
+.field input:not([type=range]):not([type=file]):not(.bare), .field select, .field textarea, .prompt textarea {
   width: 100%; border: 0; border-radius: 12px; background: var(--paper); padding: 9px 12px; font: inherit; color: inherit; }
 .field textarea { resize: vertical; line-height: 1.6; }
 .field input[type=range] { accent-color: var(--coral); }

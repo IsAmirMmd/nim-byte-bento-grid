@@ -1,10 +1,10 @@
 import { useDraggable } from "@dnd-kit/core";
-import { AtSign, BadgeCheck, BarChart3, CalendarDays, BookOpen, Briefcase, Code2, FolderKanban, GraduationCap, Hash, Image, Images, Link2, Quote, Sparkles, StickyNote, Tags, User, Zap } from "lucide-react";
+import { AtSign, BadgeCheck, BarChart3, CalendarDays, ChartBar, FolderGit2, Music, SquarePlay, BookOpen, Briefcase, Code2, FolderKanban, GraduationCap, Hash, Image, Images, Link2, Quote, Sparkles, StickyNote, Tags, User, Zap } from "lucide-react";
 import { KINDS, SINGLE } from "../../lib/state.js";
 import { KIND_TEXT } from "../../i18n.js";
 
 export const ICONS = { hero: User, image: Image, now: Zap, feature: Sparkles, stack: Code2, experience: Briefcase, education: GraduationCap,
-  project: FolderKanban, contact: AtSign, note: StickyNote, quote: Quote, chips: Tags, number: Hash, status: BadgeCheck, photo: Images, links: Link2, stat: BarChart3, year: CalendarDays };
+  project: FolderKanban, contact: AtSign, note: StickyNote, quote: Quote, chips: Tags, number: Hash, status: BadgeCheck, photo: Images, links: Link2, stat: BarChart3, year: CalendarDays, music: Music, repo: FolderGit2, video: SquarePlay, progress: ChartBar };
 
 function Item({ kind, lang, used, why, onAdd, onReveal }) {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({ id: `lib-${kind}`, data: { type: "library", kind }, disabled: used });

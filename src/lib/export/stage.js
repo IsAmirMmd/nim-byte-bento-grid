@@ -14,6 +14,11 @@ export async function mountStage(profile, uploads) {
   host.innerHTML = `<style>${canvasCss(profile.theme)}</style><div class="bc-stage" dir="${dirOf(profile)}">${rows.map((r) =>
     `<div class="x-row" style="display:flex;align-items:stretch">${r.tiles.map((t) =>
       `<div class="wrap" data-id="${t.id}" style="width:${t.width}px;min-height:${r.minHeight ?? 0}px">${tileHtml({ kind: t.kind, data: t.data }, lang, uploads)}</div>`).join("")}</div>`).join("")}</div>`;
+  // covers and thumbnails from other sites come through /api/img, so they can be drawn into the export
+  for (const img of host.querySelectorAll("img")) {
+    const src = img.getAttribute("src") ?? "";
+    if (/^https:/.test(src) && new URL(src).origin !== location.origin) img.src = `/api/img?u=${encodeURIComponent(src)}`;
+  }
   document.body.append(host);
   await document.fonts.ready;
   await Promise.all([...host.querySelectorAll("img")].map((i) => (i.complete ? null : new Promise((ok) => { i.onload = i.onerror = ok; }))));

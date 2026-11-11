@@ -83,3 +83,4 @@ img { max-width: 100%; }
   .header nav > a:not(.icon-btn) { display: none; }
 }
 
+.btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }

@@ -36,4 +36,4 @@ export function tileHtml(tile, lang, uploads) {
 // a stats tile's title and tone, as the skill gives them
 const statData = (id, lang) => statRows({ lang }).flatMap((r) => r.tiles).find((x) => x.id === `stat-${id}`).data;
 export const statHtml = (t, lang) => scaled(t.kind === "stat" ? statTile(t.data, sampleStats, lang) : yearTile(t.data, sampleStats, lang));
-export const MIN = { hero: 300, image: 300, now: 230, feature: 230, contact: 116, photo: 230, quote: 200, number: 180, status: 160, stat: 150, year: 200 };
+export const MIN = { hero: 300, image: 300, now: 230, feature: 230, contact: 116, photo: 230, quote: 200, number: 180, status: 160, stat: 150, year: 200, music: 200, repo: 180, video: 230, progress: 160 };

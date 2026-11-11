@@ -83,7 +83,8 @@ export const KIND_TEXT = {
     education: ["تحصیلات", "رشته و دانشگاه"], project: ["پروژه", "اسکرین‌شات، اسم و لینک"], contact: ["راه ارتباطی", "یک یوزرنیم یا آدرس"],
     note: ["یادداشت", "عنوان و یک خط متن"], quote: ["نقل‌قول", "یک جمله و گوینده‌اش"], chips: ["برچسب‌ها", "مثلاً در حال یادگیری"],
     number: ["عدد", "یک عدد بزرگ با توضیح"], status: ["وضعیت", "مثلاً آماده‌ی همکاری"], photo: ["عکس تمام‌قد", "عکسی که کل کاشی را پر می‌کند"],
-    links: ["لینک‌ها", "فهرست کوتاه لینک"], stat: ["آمار گیت‌هاب", "عددهایش از گیت‌هاب می‌آید"], year: ["یک سال گیت‌هاب", "جدول مشارکت‌های یک سال"],
+    links: ["لینک‌ها", "فهرست کوتاه لینک"], stat: ["آمار گیت‌هاب", "عددهایش از گیت‌هاب می‌آید"], music: ["موزیک", "آهنگ محبوب از Spotify یا SoundCloud"],
+    repo: ["ریپو", "یک ریپوی گیت‌هاب با ستاره‌ها"], video: ["ویدیو", "یک ویدیوی YouTube"], progress: ["پیشرفت", "نوار درصد، مثلاً برای یادگیری"], year: ["یک سال گیت‌هاب", "جدول مشارکت‌های یک سال"],
   },
   en: {
     hero: ["Intro", "Your name and one line"], image: ["Picture", "A photo or avatar with a caption"], now: ["Now", "What you do now"],
@@ -91,17 +92,26 @@ export const KIND_TEXT = {
     education: ["Education", "Degree and school"], project: ["Project", "A screenshot, a name and a link"], contact: ["Contact", "A handle or an address"],
     note: ["Note", "A title and a line"], quote: ["Quote", "A sentence and who said it"], chips: ["Chips", "Like what you're learning"],
     number: ["Number", "A big number with a line"], status: ["Status", "Like open to work"], photo: ["Photo", "A picture filling the tile"],
-    links: ["Links", "A short list of links"], stat: ["GitHub stat", "Its number comes from GitHub"], year: ["A year on GitHub", "The contribution calendar"],
+    links: ["Links", "A short list of links"], stat: ["GitHub stat", "Its number comes from GitHub"], music: ["Music", "A favourite song from Spotify or SoundCloud"],
+    repo: ["Repository", "A GitHub repo with its stars"], video: ["Video", "A YouTube video"], progress: ["Progress", "Bars in percent, like what you learn"], year: ["A year on GitHub", "The contribution calendar"],
   },
 };
 
 export const FIELD_TEXT = {
   fa: { label: "برچسب", title: "عنوان", lead: "توضیح", chips: "برچسب‌ها (با کاما جدا کنید)", src: "عکس", caption: "زیرنویس", tone: "رنگ", href: "لینک",
     meta: "خط دوم", text: "متن", subtitle: "زیرعنوان", titleDir: "جهت عنوان", groups: "هر خط: گروه: مورد، مورد", lines: "هر خط: زمان | نقش | جا",
-    image: "اسکرین‌شات واقعی", value: "مقدار", author: "گوینده", items: "مورد‌ها (با کاما جدا کنید)", linkItems: "هر خط: اسم | مقدار", upload: "انتخاب عکس", "dir-auto": "خودکار", "dir-rtl": "راست به چپ", "dir-ltr": "چپ به راست" },
+    image: "اسکرین‌شات واقعی", value: "مقدار", author: "گوینده", items: "مورد‌ها (با کاما جدا کنید)", linkItems: "هر خط: اسم | مقدار", upload: "انتخاب عکس", "dir-auto": "خودکار", "dir-rtl": "راست به چپ", "dir-ltr": "چپ به راست",
+    url: "لینک", artist: "خواننده", duration: "مدت (دقیقه:ثانیه)", cover: "لینک کاور", repo: "ریپو", description: "توضیح", language: "زبان",
+    stars: "ستاره‌ها", forks: "فورک‌ها", channel: "کانال", thumb: "لینک تصویر", bars: "هر خط: اسم | درصد", fetch: "پر کردن",
+    "fetch-bad": "این لینک درست نیست.", "fetch-unsupported": "فقط لینک Spotify، SoundCloud و YouTube.", "fetch-missing": "این ریپو پیدا نشد (یا خصوصی است).",
+    "fetch-down": "الان نشد اطلاعات لینک را بگیریم؛ دوباره امتحان کنید یا دستی پر کنید." },
   en: { label: "Label", title: "Title", lead: "Lead", chips: "Chips (comma-separated)", src: "Picture", caption: "Caption", tone: "Tone", href: "Link",
     meta: "Second line", text: "Text", subtitle: "Subtitle", titleDir: "Title direction", groups: "One per line: Group: item, item", lines: "One per line: when | role | where",
-    image: "A real screenshot", value: "Value", author: "Author", items: "Items (comma-separated)", linkItems: "One per line: name | value", upload: "Choose a picture", "dir-auto": "Auto", "dir-rtl": "Right to left", "dir-ltr": "Left to right" },
+    image: "A real screenshot", value: "Value", author: "Author", items: "Items (comma-separated)", linkItems: "One per line: name | value", upload: "Choose a picture", "dir-auto": "Auto", "dir-rtl": "Right to left", "dir-ltr": "Left to right",
+    url: "Link", artist: "Artist", duration: "Length (m:ss)", cover: "Cover link", repo: "Repository", description: "Description", language: "Language",
+    stars: "Stars", forks: "Forks", channel: "Channel", thumb: "Thumbnail link", bars: "One per line: name | percent", fetch: "Fill",
+    "fetch-bad": "That link doesn't look right.", "fetch-unsupported": "Spotify, SoundCloud and YouTube links only.", "fetch-missing": "No such repository (or it's private).",
+    "fetch-down": "Couldn't read the link right now; try again or fill it in by hand." },
 };
 
 // the tones and the palettes, by name
@@ -116,4 +126,22 @@ export const PALETTE_TEXT = {
     mono: "سیاه و سفید", pink: "صورتی", custom: "دلخواه" },
   en: { nimbyte: "nimbyte", purple: "Purple", blue: "Blue", red: "Red", neutral: "Neutral", green: "Green", yellow: "Yellow", orange: "Orange",
     mono: "Black & white", pink: "Pink", custom: "Custom" },
+};
+
+// the inputs' placeholders: by "kind.field", then by field
+export const HOLDER = {
+  fa: { link: "https://…", label: "مثلاً «الان» یا «Now»", title: "عنوان", lead: "یک یا دو جمله درباره‌ی کاری که می‌کنید", text: "یک خط متن",
+    meta: "شرکت · دورکاری · ۱۴۰۲ تا حالا", subtitle: "example.com", caption: "یک زیرنویس کوتاه", chips: "React، TypeScript، Open source",
+    items: "Rust، Go، Three.js", value: "مقدار", author: "گوینده", "contact.value": "@username یا you@example.com", "number.value": "2015",
+    groups: "Languages: TypeScript, Go\nTools: Git, Figma", lines: "1402–حالا | Front-End | Company", links: "Blog | example.com/blog",
+    "music.url": "لینک آهنگ در Spotify یا SoundCloud", "video.url": "لینک ویدیو در YouTube", "repo.repo": "owner/name یا لینک ریپو",
+    artist: "اسم خواننده", duration: "3:34", description: "این ریپو چه کار می‌کند", language: "TypeScript", stars: "128", forks: "12",
+    channel: "اسم کانال", bars: "Rust | 40\nGo | 70" },
+  en: { link: "https://…", label: "Like “Now”", title: "Title", lead: "A sentence or two on what you do", text: "A line of text",
+    meta: "Company · remote · 2024–now", subtitle: "example.com", caption: "A short caption", chips: "React, TypeScript, Open source",
+    items: "Rust, Go, Three.js", value: "Value", author: "Who said it", "contact.value": "@username or you@example.com", "number.value": "2015",
+    groups: "Languages: TypeScript, Go\nTools: Git, Figma", lines: "2024–now | Front-End | Company", links: "Blog | example.com/blog",
+    "music.url": "A Spotify or SoundCloud song link", "video.url": "A YouTube video link", "repo.repo": "owner/name or the repo's link",
+    artist: "Artist", duration: "3:34", description: "What the repository does", language: "TypeScript", stars: "128", forks: "12",
+    channel: "Channel name", bars: "Rust | 40\nGo | 70" },
 };

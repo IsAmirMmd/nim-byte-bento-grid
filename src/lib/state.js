@@ -9,7 +9,7 @@ export const isStat = (t) => t.kind === "stat" || t.kind === "year";
 
 export const SINGLE = ["hero", "image", "now", "feature", "stack", "experience", "education"];
 export const LISTS = { project: ["projects", "work"], contact: ["contacts", "contact"], note: ["notes", "note"] };
-export const BLOCKS = ["quote", "chips", "number", "status", "photo", "links"];
+export const BLOCKS = ["quote", "chips", "number", "status", "photo", "links", "music", "repo", "video", "progress"];
 export const KINDS = [...SINGLE, "project", "contact", "note", ...BLOCKS];
 const STORE = "nim-byte-bento-grid";
 let seq = 0;
@@ -75,6 +75,10 @@ export const BLANK = {
   status: { label: "Status", title: "Open to work", text: "Remote, full-time", tone: "green" },
   photo: { src: "", caption: "" },
   links: { label: "Elsewhere", items: [{ name: "Blog", value: "example.com/blog" }], tone: "paper" },
+  music: { label: "Now playing", title: "Song title", artist: "Artist", cover: "", duration: 210, source: "Spotify" },
+  repo: { label: "Repository", repo: "you/project", description: "What it does, in one line.", language: "TypeScript", color: "#3178c6", stars: 128, forks: 12 },
+  video: { title: "Video title", channel: "Channel", thumb: "" },
+  progress: { label: "Learning", items: [{ name: "Rust", value: 40 }, { name: "Three.js", value: 70 }] },
 };
 export const newTile = (kind) => ({ key: uid(), kind, data: structuredClone(BLANK[kind]) });
 
