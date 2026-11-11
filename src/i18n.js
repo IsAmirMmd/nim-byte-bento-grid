@@ -26,6 +26,8 @@ export const T = {
     img: { drag: "بکشید تا جای عکس عوض شود", zoom: "بزرگ‌نمایی", fit: "پر کردن کاشی", cover: "پر کند", contain: "کامل دیده شود",
       mask: "ماسک", rounded: "گوشه‌گرد", square: "چهارگوش", circle: "دایره", arch: "طاقی", capPos: "جای زیرنویس", below: "زیر عکس",
       "top-right": "بالا راست", "top-left": "بالا چپ", "bottom-right": "پایین راست", "bottom-left": "پایین چپ", reset: "برگرداندن برش" },
+    color: { palette: "پالت رنگ README", own: "پنج طیف پالت", ownHint: "روی هر طیف بزنید تا رنگش را خودتان انتخاب کنید.", shade: "طیف",
+      hue: "رنگ", custom: "رنگ دلخواه", dropper: "برداشتن رنگ از صفحه" },
     footer: { line: "سایت، داشبورد، ربات تلگرام و مینی اپ تلگرام می‌سازیم.", made: "ساخته‌ی نیم‌بایت", visit: "nimbyte.ir" },
   },
   en: {
@@ -53,6 +55,8 @@ export const T = {
     img: { drag: "Drag to move the picture", zoom: "Zoom", fit: "Fill", cover: "Cover", contain: "Show whole",
       mask: "Mask", rounded: "Rounded", square: "Square", circle: "Circle", arch: "Arch", capPos: "Caption", below: "Below",
       "top-right": "Top right", "top-left": "Top left", "bottom-right": "Bottom right", "bottom-left": "Bottom left", reset: "Reset crop" },
+    color: { palette: "README palette", own: "The palette's five shades", ownHint: "Click a shade to pick its colour yourself.", shade: "Shade",
+      hue: "Hue", custom: "Any colour", dropper: "Pick a colour from the screen" },
     footer: { line: "Websites, dashboards, Telegram bots and Mini Apps.", made: "Made by nimbyte", visit: "nimbyte.ir" },
   },
 };
@@ -86,7 +90,16 @@ export const FIELD_TEXT = {
     image: "A real screenshot", value: "Value", author: "Author", items: "Items (comma-separated)", linkItems: "One per line: name | value", upload: "Choose a picture", "dir-auto": "Auto", "dir-rtl": "Right to left", "dir-ltr": "Left to right" },
 };
 
+// the tones and the palettes, by name
 export const TONE_TEXT = {
-  fa: { paper: "کاغذی", sand: "شنی", "accent-soft": "مرجانی روشن", blue: "آبی روشن", green: "سبز روشن" },
-  en: { paper: "Paper", sand: "Sand", "accent-soft": "Soft coral", blue: "Soft blue", green: "Soft green" },
+  fa: { paper: "کاغذی", sand: "روشن‌ترین طیف", "accent-soft": "طیف روشن", accent: "رنگ اصلی", "accent-ink": "طیف تیره", ink: "تیره‌ترین طیف",
+    blue: "آبی روشن", green: "سبز روشن" },
+  en: { paper: "Paper", sand: "Lightest shade", "accent-soft": "Light shade", accent: "Main colour", "accent-ink": "Deep shade", ink: "Darkest shade",
+    blue: "Soft blue", green: "Soft green" },
+};
+export const PALETTE_TEXT = {
+  fa: { nimbyte: "نیم‌بایت", purple: "بنفش", blue: "آبی", red: "قرمز", neutral: "خنثی", green: "سبز", yellow: "زرد", orange: "نارنجی",
+    mono: "سیاه و سفید", pink: "صورتی", custom: "دلخواه" },
+  en: { nimbyte: "nimbyte", purple: "Purple", blue: "Blue", red: "Red", neutral: "Neutral", green: "Green", yellow: "Yellow", orange: "Orange",
+    mono: "Black & white", pink: "Pink", custom: "Custom" },
 };

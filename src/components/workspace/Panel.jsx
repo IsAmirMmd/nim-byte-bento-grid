@@ -1,12 +1,14 @@
 import { Trash2, X, Upload } from "lucide-react";
 import { useState } from "react";
-import { FIELD_TEXT, KIND_TEXT, TONE_TEXT } from "../../i18n.js";
-import { FIELDS, TONES, TONE_OF, read, write } from "./fields.js";
+import { FIELD_TEXT, KIND_TEXT, PALETTE_TEXT, TONE_TEXT } from "../../i18n.js";
+import { FIELDS, TONE_OF, read, write } from "./fields.js";
+import ThemeField from "./ThemeField.jsx";
+import ToneField from "./ToneField.jsx";
 import ImageEditor from "./ImageEditor.jsx";
 import { ICONS } from "./Library.jsx";
 import Select from "./Select.jsx";
 
-function Field({ tile, spec, lang, t, uploads, onData, onImage }) {
+function Field({ tile, spec, lang, t, theme, uploads, onData, onImage }) {
   const [name, type = "text"] = Array.isArray(spec) ? spec : [spec];
   const label = FIELD_TEXT[lang][{ groups: "groups", lines: "lines", links: "linkItems" }[type] ?? name] ?? name;
   const [text, setText] = useState(read(tile, name, type));
@@ -14,7 +16,7 @@ function Field({ tile, spec, lang, t, uploads, onData, onImage }) {
   const id = `f-${tile.key}-${name}`;
   let input;
   if (["area", "groups", "lines", "links"].includes(type)) input = <textarea id={id} rows={type === "area" ? 3 : 5} dir="auto" value={text} onChange={(e) => change(e.target.value)} />;
-  else if (type === "tone") input = <Select id={id} swatch value={tile.data.tone ?? TONE_OF[tile.kind] ?? "paper"} options={TONES.map((v) => ({ value: v, label: TONE_TEXT[lang][v] }))} onChange={change} />;
+  else if (type === "tone") input = <ToneField id={id} value={tile.data.tone ?? TONE_OF[tile.kind] ?? "paper"} theme={theme} names={TONE_TEXT[lang]} labels={t.color} onChange={change} />;
   else if (type === "dir") input = <Select id={id} value={tile.data.titleDir ?? "auto"} options={["auto", "rtl", "ltr"].map((v) => ({ value: v, label: FIELD_TEXT[lang][`dir-${v}`] }))} onChange={change} />;
   else if (type === "image") input = (
     <>
@@ -39,6 +41,7 @@ export default function Panel({ t, lang, model, tile, width, uploads, onData, on
       <div className="field"><label htmlFor="s-lang">{t.ws.readmeLang}</label>
         <Select id="s-lang" value={model.lang} onChange={(v) => onSettings({ lang: v })}
           options={[{ value: "fa", label: "فارسی (راست به چپ)" }, { value: "en", label: "English (left to right)" }]} /></div>
+      <ThemeField theme={model.theme} names={PALETTE_TEXT[lang]} labels={t.color} onChange={(theme) => onSettings({ theme })} />
       <label className="check"><input type="checkbox" checked={model.stats} onChange={(e) => onSettings({ stats: e.target.checked })} />{t.ws.stats}</label>
       <p className="hint">{t.ws.hint}</p>
     </div>
@@ -51,7 +54,7 @@ export default function Panel({ t, lang, model, tile, width, uploads, onData, on
         <button type="button" className="btn ghost icon" onClick={onClose} aria-label={t.ws.close}><X size={18} /></button>
       </div>
       {(tile.kind === "stat" || tile.kind === "year") && <p className="hint">{KIND_TEXT[lang][tile.kind][1]}. {t.ws.statsNote}</p>}
-      {FIELDS[tile.kind].map((spec) => <Field key={String(spec)} tile={tile} spec={spec} lang={lang} t={t} uploads={uploads} onData={onData} onImage={onImage} />)}
+      {FIELDS[tile.kind].map((spec) => <Field key={String(spec)} tile={tile} spec={spec} lang={lang} t={t} theme={model.theme} uploads={uploads} onData={onData} onImage={onImage} />)}
       <div className="field">
         <label htmlFor="f-width">{t.ws.width} <output>{Math.round(width / 10)}%</output></label>
         <input id="f-width" type="range" min="120" max="1000" step="10" value={width} onChange={(e) => onWidth(Number(e.target.value))} />

@@ -1,5 +1,7 @@
 // Copied from nim-byte-readme-maker/skills/bento-readme/scripts/layout.mjs, so the editor draws tiles
 // with the same code that builds the README. Keep it in step with the skill.
+import { isDark } from "./tiles.js";
+
 // Turns profile.json into rows of tiles on a 1000px design canvas. Each row's widths add up to
 // 1000; readme.mjs writes them as percentages. Every section is optional.
 
@@ -87,6 +89,10 @@ export function fit(widths) {
 // The rows: profile.layout when it's there (the editor writes it: rows of tile ids, each with an
 // optional width), else the default order. Tiles the layout doesn't name are left out.
 export function rows(profile) {
+  // a dark tile (the now tile, or any in a dark tone) gets a variant for GitHub's dark theme
+  return placed(profile).map((r) => ({ ...r, tiles: r.tiles.map((t) => ({ ...t, ink: t.kind === "now" ? !t.data.tone || isDark(t.data.tone) : isDark(t.data?.tone) })) }));
+}
+function placed(profile) {
   const defaults = defaultRows(profile);
   const notes = noteTiles(profile);
   if (!profile.layout?.length) return notes.length ? [...defaults, { tiles: notes.map((t, k, a) => ({ ...t, width: fit(a.map(() => 0))[k] })) }] : defaults;

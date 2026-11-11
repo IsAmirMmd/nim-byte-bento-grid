@@ -1,17 +1,16 @@
 // The form fields of each kind of tile, and how list-like fields read and write the tile's data.
-export const TONES = ["paper", "sand", "accent-soft", "blue", "green"];
 // the tone a tile has when none is set (as tiles.js draws it)
-export const TONE_OF = { image: "accent-soft", quote: "accent-soft", number: "sand", status: "green" };
+export const TONE_OF = { image: "accent-soft", quote: "accent-soft", number: "sand", status: "green", now: "ink", feature: "accent", education: "blue" };
 export const FIELDS = {
-  hero: ["label", "title", ["lead", "area"], ["chips", "list"]],
+  hero: ["label", "title", ["lead", "area"], ["chips", "list"], ["tone", "tone"]],
   image: [["src", "image"], "caption", ["tone", "tone"], "href"],
-  now: ["label", "title", "meta", ["text", "area"]],
-  feature: ["label", "title", ["titleDir", "dir"], "subtitle", ["text", "area"], ["chips", "list"], "href"],
+  now: ["label", "title", "meta", ["text", "area"], ["tone", "tone"]],
+  feature: ["label", "title", ["titleDir", "dir"], "subtitle", ["text", "area"], ["chips", "list"], ["tone", "tone"], "href"],
   stack: [["groups", "groups"]],
   experience: [["lines", "lines"]],
-  education: ["label", "title", ["text", "area"], ["chips", "list"]],
-  project: ["title", ["text", "area"], ["image", "image"], "href"],
-  contact: ["label", "value", "href"],
+  education: ["label", "title", ["text", "area"], ["chips", "list"], ["tone", "tone"]],
+  project: ["title", ["text", "area"], ["image", "image"], ["tone", "tone"], "href"],
+  contact: ["label", "value", ["tone", "tone"], "href"],
   note: ["label", "title", ["text", "area"], ["tone", "tone"], "href"],
   quote: [["text", "area"], "author", ["tone", "tone"], "href"],
   chips: ["label", ["items", "list"], ["tone", "tone"], "href"],
