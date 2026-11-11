@@ -57,9 +57,11 @@ body { overflow-anchor: none; }
   font-size: 13px; font-weight: 600; }
 .bc.is-dragging .bc-gap:not(.open)::before { content: ""; width: 100%; height: 2px; border-radius: 2px; background: rgba(250, 96, 78, .35); }
 .bc-gap > span { display: none; }
-.bc-gap.open { height: auto !important; outline: 0 !important; background: none !important; padding: calc(10 * var(--u)) 0; overflow: visible; }
-.ph-row { width: 100%; height: calc(120 * var(--u)); min-height: 64px; border-radius: calc(22 * var(--u)); display: grid; place-items: center;
-  background: rgba(250, 96, 78, .12); outline: 2px dashed var(--coral); outline-offset: -2px; color: var(--coral-ink); animation: ph-in .2s ease-out; }
+/* a new row opens as a line over the gap, taking no room, so nothing slides under the pointer */
+.bc-gap.open { position: relative; overflow: visible; z-index: 5; }
+.ph-row { position: absolute; inset-inline: 0; top: 50%; translate: 0 -50%; height: 6px; border-radius: 6px; background: var(--coral);
+  display: grid; place-items: center; animation: ph-in .15s ease-out; }
+.ph-row b { background: var(--coral); color: var(--ink); font-size: 13px; padding: 4px 12px; border-radius: 10px; white-space: nowrap; box-shadow: var(--shadow-md); }
 .bc .wrap.ph { padding: calc(10 * var(--u)); cursor: grabbing; }
 .ph-box { flex: 1; border-radius: calc(22 * var(--u)); background: rgba(250, 96, 78, .12); outline: 2px dashed var(--coral); outline-offset: -2px; animation: ph-in .2s ease-out; }
 @keyframes ph-in { from { opacity: 0; transform: scale(.96); } }

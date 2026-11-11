@@ -6,14 +6,15 @@ import TileView from "./TileView.jsx";
 
 function Gap({ index, label, open }) {
   const { setNodeRef } = useDroppable({ id: `gap-${index}`, data: { type: "gap", index } });
-  return <div ref={setNodeRef} className={`bc-gap${open ? " open" : ""}`}>{open && <div className="ph-row"><b>{label}</b></div>}</div>;
+  return <div ref={setNodeRef} data-gap={index} className={`bc-gap${open ? " open" : ""}`}>{open && <div className="ph-row"><b>{label}</b></div>}</div>;
 }
 
 function Row({ row, index, tiles, ctx }) {
   const { setNodeRef } = useDroppable({ id: row.id, data: { type: "row", row: index }, disabled: row.placeholder });
   const min = Math.max(0, ...row.items.map((e) => MIN[tiles.get(e.key)?.kind] ?? (e.ph ? 120 : 0)));
   return (
-    <div ref={setNodeRef} className="bc-row">
+    <div ref={setNodeRef} data-row={row.placeholder ? undefined : index} data-row-id={row.id} className="bc-row"
+      style={ctx.heights?.[row.id] ? { height: ctx.heights[row.id] } : undefined}>
       {row.items.map((e, k) => {
         if (e.ph) return <div key="__ph" className="wrap ph" style={{ width: `${e.width / 10}%`, minHeight: `calc(${Math.max(min, 120)} * var(--u))` }}><div className="ph-box" /></div>;
         const t = tiles.get(e.key);
@@ -33,7 +34,7 @@ export default function Canvas({ model, rows, uploads, selected, drag, t, onSele
   const style = useMemo(() => canvasCss(model.theme), [model.theme]);
   const tiles = useMemo(() => new Map(model.tiles.map((x) => [x.key, x])), [model.tiles]);
   const dir = model.lang === "fa" ? "rtl" : "ltr";
-  const ctx = { lang: model.lang, uploads, selected, dir, dragKey: drag?.key, onSelect, onResize, onMenu };
+  const ctx = { lang: model.lang, uploads, selected, dir, dragKey: drag?.key, heights: drag?.heights, onSelect, onResize, onMenu };
   let gap = 0;
   let afterOpen = false; // the row after an open gap doesn't draw its own (same index)
   return (
