@@ -130,6 +130,16 @@
       "text": "What you see on the canvas is what the agent builds: both draw with the skill's own tile code.",
       "author": "How it stays honest",
       "tone": "blue"
+    },
+    {
+      "type": "music",
+      "label": "On repeat while building this",
+      "title": "Let It Happen",
+      "artist": "Tame Impala · Currents",
+      "cover": "images/currents.jpg",
+      "duration": 467,
+      "source": "Spotify",
+      "href": "https://open.spotify.com/track/2X485T9Z5Ly0xyaghN73ed"
     }
   ],
   "layout": [
@@ -181,12 +191,18 @@
     ],
     [
       {
-        "id": "note-1",
-        "width": 420
+        "id": "block-7",
+        "width": 580
       },
       {
+        "id": "note-1",
+        "width": 420
+      }
+    ],
+    [
+      {
         "id": "block-6",
-        "width": 580
+        "width": 1000
       }
     ],
     [
@@ -213,7 +229,7 @@
       "label": "Run it",
       "title": "npm install, then npm run dev",
       "text": "npm run build writes dist/. Every push to main deploys on Vercel.",
-      "tone": "ink"
+      "tone": "sand"
     }
   ]
 }
