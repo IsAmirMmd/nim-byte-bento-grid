@@ -82,4 +82,3 @@ img { max-width: 100%; }
   .header nav > a:not(.icon-btn) { display: none; }
 }
 
-.workspace { grid-column: 1 / -1; min-height: 400px; }
