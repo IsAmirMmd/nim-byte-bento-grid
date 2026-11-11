@@ -1,0 +1,250 @@
+{
+  "github": "IsAmirMmd",
+  "lang": "en",
+  "stats": true,
+  "hero": {
+    "label": "github.com/IsAmirMmd",
+    "title": "Salam! I'm Amirmohammad Lotfipour.",
+    "lead": "Front-End developer. I build websites, dashboards, Telegram Mini Apps and bots with Next.js, React and TypeScript.",
+    "chips": [
+      "Remote since 2023",
+      "Coding since 7th grade",
+      "Builds with Claude Code"
+    ]
+  },
+  "image": {
+    "src": "images/bitty.svg",
+    "caption": "Meet Bitty, nimbyte's mascot",
+    "tone": "accent-soft",
+    "href": "https://nimbyte.ir"
+  },
+  "now": {
+    "label": "Now",
+    "title": "Mid-level Front-End",
+    "meta": "Private Company · remote · 2024–now",
+    "text": "Big data into D3.js and Highcharts reports, with the team's workflow on Claude Code agents."
+  },
+  "feature": {
+    "label": "my studio",
+    "title": "نیم‌بایت",
+    "titleDir": "rtl",
+    "subtitle": "nimbyte.ir",
+    "href": "https://nimbyte.ir",
+    "chips": [
+      "Websites & dashboards",
+      "Telegram Mini Apps",
+      "Telegram bots",
+      "Animated stickers",
+      "Premium & Stars",
+      "Telegram Ads"
+    ]
+  },
+  "stack": [
+    {
+      "group": "Languages",
+      "items": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "TypeScript",
+        "Node.js",
+        "Java",
+        "Regex"
+      ]
+    },
+    {
+      "group": "Frameworks",
+      "items": [
+        "React",
+        "Next.js",
+        "Tailwind CSS",
+        "Ant Design",
+        "MUI",
+        "GSAP",
+        "D3.js",
+        "Highcharts",
+        "Jest"
+      ]
+    },
+    {
+      "group": "Data",
+      "items": [
+        "PostgreSQL",
+        "MySQL",
+        "MongoDB",
+        "Prisma"
+      ]
+    },
+    {
+      "group": "Telegram",
+      "items": [
+        "Bots",
+        "Mini Apps",
+        "grammY",
+        "Pyrogram",
+        "Telegram Serverless"
+      ]
+    },
+    {
+      "group": "Tools",
+      "items": [
+        "Git",
+        "GitHub",
+        "Figma",
+        "WordPress",
+        "Vercel",
+        "Claude Code"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Melting Bear",
+      "text": "Web3 pixel game · Next.js, TypeScript",
+      "image": "images/melting-bear.png",
+      "href": "https://melting-bear.netlify.app/"
+    },
+    {
+      "title": "AdsProvider",
+      "text": "Telegram bot for Telegram Ads campaigns",
+      "image": "images/adsprovider.png",
+      "href": "https://t.me/AdsProviderBot"
+    },
+    {
+      "title": "Nakoja",
+      "text": "Online shop, from product page to seller panel",
+      "image": "images/nakoja.png",
+      "href": "https://nakoja.nimbyte.ir"
+    }
+  ],
+  "experience": [
+    {
+      "when": "2024–now",
+      "role": "Front-End, Mid-level",
+      "where": "Private Company, remote"
+    },
+    {
+      "when": "2023–2024",
+      "role": "Front-End, Junior",
+      "where": "123 Health App, remote"
+    },
+    {
+      "when": "Freelance",
+      "role": "Front-End",
+      "where": "Melting Bears, Tehran"
+    },
+    {
+      "when": "Winter 2023",
+      "role": "WordPress instructor",
+      "where": "Babol Univ. of Medical Sciences"
+    }
+  ],
+  "education": {
+    "title": "B.Sc. Computer Engineering",
+    "text": "Babol Noshirvani University of Technology, since 2022",
+    "chips": [
+      "TA, Web Programming"
+    ]
+  },
+  "contacts": [
+    {
+      "label": "Telegram",
+      "value": "@isAmirMmd",
+      "href": "https://t.me/isAmirMmd"
+    },
+    {
+      "label": "Channel",
+      "value": "@nimByte",
+      "href": "https://t.me/nimByte"
+    },
+    {
+      "label": "Instagram",
+      "value": "@nimbyte.ir",
+      "href": "https://www.instagram.com/nimbyte.ir/"
+    },
+    {
+      "label": "LinkedIn",
+      "value": "in/isamirmmd",
+      "href": "https://linkedin.com/in/isamirmmd"
+    },
+    {
+      "label": "Email",
+      "value": "amirmmd.lotfipour@gmail.com",
+      "href": "mailto:amirmmd.lotfipour@gmail.com"
+    }
+  ],
+  "layout": [
+    [
+      {
+        "id": "hero",
+        "width": 640
+      },
+      {
+        "id": "image",
+        "width": 360
+      }
+    ],
+    [
+      {
+        "id": "now",
+        "width": 333
+      },
+      {
+        "id": "feature",
+        "width": 667
+      }
+    ],
+    [
+      {
+        "id": "stack",
+        "width": 1000
+      }
+    ],
+    [
+      {
+        "id": "work-1",
+        "width": 334
+      },
+      {
+        "id": "work-2",
+        "width": 333
+      },
+      {
+        "id": "work-3",
+        "width": 333
+      }
+    ],
+    [
+      {
+        "id": "experience",
+        "width": 620
+      },
+      {
+        "id": "education",
+        "width": 380
+      }
+    ],
+    [
+      {
+        "id": "contact-1",
+        "width": 180
+      },
+      {
+        "id": "contact-2",
+        "width": 180
+      },
+      {
+        "id": "contact-3",
+        "width": 185
+      },
+      {
+        "id": "contact-4",
+        "width": 185
+      },
+      {
+        "id": "contact-5",
+        "width": 270
+      }
+    ]
+  ]
+}
