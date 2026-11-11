@@ -4,11 +4,14 @@ import { useState } from "react";
 import { FIELD_TEXT, HOLDER, TONE_TEXT } from "../../i18n.js";
 import { LinkError, linkMeta } from "../../lib/link-meta.js";
 import { TONE_OF, read, write } from "./fields.js";
+import ChipsInput from "./ChipsInput.jsx";
+import { IconInput } from "./IconInput.jsx";
 import ImageEditor from "./ImageEditor.jsx";
+import StackField from "./StackField.jsx";
 import Select from "./Select.jsx";
 import ToneField from "./ToneField.jsx";
 
-const AREAS = ["area", "groups", "lines", "links", "bars"];
+const AREAS = ["area", "lines", "links", "bars"];
 
 // every input's prefix icon: by "kind.field", then by its type, then by its name
 export const FIELD_ICONS = {
@@ -20,10 +23,6 @@ export const FIELD_ICONS = {
 const LISTS = ["groups", "lines", "links", "bars"];
 const iconOf = (kind, name, type) => FIELD_ICONS[`${kind}.${name}`] ?? (LISTS.includes(type) ? FIELD_ICONS[type] : null) ?? FIELD_ICONS[name] ?? Type;
 
-// A text input or textarea with its icon at the inline start.
-export function IconInput({ icon: Icon, area, children }) {
-  return <div className={`icon-input${area ? " area" : ""}`}><Icon size={16} aria-hidden="true" />{children}</div>;
-}
 
 // A link's input: left to right, with a link icon on its left (and, for tiles filled from a link,
 // a button that fills them).
@@ -65,8 +64,14 @@ export default function Field({ tile, spec, lang, t, theme, uploads, onData, onI
   }
 
   let input;
-  if (AREAS.includes(type)) input = (
-    <IconInput icon={Icon} area><textarea id={id} className="bare" rows={type === "area" ? 3 : 5} dir="auto" placeholder={holder} value={text} onChange={(e) => change(e.target.value)} /></IconInput>
+  if (type === "list") input = (
+    <ChipsInput id={id} icon={Icon} value={tile.data[name] ?? []} holder={holder} labels={words} onChange={(items) => onData({ ...tile.data, [name]: items })} />
+  );
+  else if (type === "groups") input = (
+    <StackField id={id} value={tile.data} words={words} holders={{ group: holders.group, skills: holders.skills }} onChange={onData} />
+  );
+  else if (AREAS.includes(type)) input = (
+    <IconInput icon={Icon} area><textarea id={id} className="bare" rows={type === "area" ? 4 : 5} dir="auto" placeholder={holder} value={text} onChange={(e) => change(e.target.value)} /></IconInput>
   );
   else if (type === "tone") input = <ToneField id={id} value={tile.data.tone ?? TONE_OF[tile.kind] ?? "paper"} theme={theme} names={TONE_TEXT[lang]} labels={t.color} onChange={change} />;
   else if (type === "dir") input = <Select id={id} icon={Icon} value={tile.data.titleDir ?? "auto"} options={["auto", "rtl", "ltr"].map((v) => ({ value: v, label: words[`dir-${v}`] }))} onChange={change} />;

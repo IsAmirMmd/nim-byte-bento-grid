@@ -2,7 +2,7 @@
    editor and the scrollbars. */
 .select { position: relative; }
 .select > button { width: 100%; display: flex; align-items: center; gap: 8px; border: 0; border-radius: 12px; background: var(--paper);
-  padding: 9px 12px; font: inherit; color: inherit; cursor: pointer; text-align: start; box-shadow: var(--shadow-md); transition: box-shadow .15s; }
+  padding: 13px 12px; font: inherit; color: inherit; cursor: pointer; text-align: start; box-shadow: var(--shadow-md); transition: box-shadow .15s; }
 .select > button span { flex: 1; } .select > button svg { color: var(--muted); transition: rotate .2s; }
 .select > button:hover { box-shadow: var(--shadow-lg); }
 .select.open > button > svg:last-child { rotate: 180deg; }
@@ -119,13 +119,13 @@ input[type=range]:focus-visible { outline: 0; } input[type=range]:focus-visible:
 /* a link's input: the icon on its left, and the fill button inside it */
 .link-input { display: flex; align-items: center; gap: 8px; background: var(--paper); border-radius: 12px; padding-inline: 12px 4px; }
 .link-input > svg { color: var(--muted); flex: none; }
-.link-input input { flex: 1; min-width: 0; border: 0; background: none; padding: 9px 0; outline: 0; font-family: JBM, ui-monospace, monospace; font-size: 14px; }
+.link-input input { flex: 1; min-width: 0; border: 0; background: none; padding: 13px 0; outline: 0; font-family: JBM, ui-monospace, monospace; font-size: 14px; }
 .link-input:focus-within { box-shadow: 0 0 0 2px var(--coral-ink); }
 /* text inputs with an icon at the inline start (Field.jsx IconInput) */
 .icon-input { display: flex; align-items: center; gap: 8px; background: var(--paper); border-radius: 12px; padding-inline: 12px; }
 .icon-input > svg { color: var(--muted); flex: none; }
-.icon-input.area { align-items: flex-start; } .icon-input.area > svg { margin-top: 12px; }
-.icon-input input, .icon-input textarea { flex: 1; min-width: 0; border: 0; background: none; padding: 9px 0; outline: 0; font: inherit; color: inherit; }
+.icon-input.area { align-items: flex-start; } .icon-input.area > svg { margin-top: 16px; }
+.icon-input input, .icon-input textarea { flex: 1; min-width: 0; border: 0; background: none; padding: 13px 0; outline: 0; font: inherit; color: inherit; }
 .icon-input textarea { resize: vertical; line-height: 1.6; }
 .icon-input:focus-within { box-shadow: 0 0 0 2px var(--coral-ink); }
 .select > button .select-icon { color: var(--muted); }
@@ -133,3 +133,28 @@ input[type=range]:focus-visible { outline: 0; } input[type=range]:focus-visible:
 .link-input input::placeholder { font-family: Vazirmatn, sans-serif; }
 .field input::placeholder, .field textarea::placeholder { color: var(--muted); opacity: .6; }
 .field-error { margin: 2px 0 0; color: var(--coral-ink); font-size: 13px; }
+
+/* lists as badges (ChipsInput.jsx): × removes one, Enter or a comma adds one */
+.chips-input { display: flex; align-items: flex-start; gap: 8px; background: var(--paper); border-radius: 12px; padding: 9px 12px; min-height: 48px; cursor: text; }
+.chips-input:focus-within { box-shadow: 0 0 0 2px var(--coral-ink); }
+.chips-input .ci-icon { color: var(--muted); flex: none; margin-top: 7px; }
+.ci-badges { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.ci-badges input { flex: 1 0 70px; min-width: 70px; border: 0; background: none; padding: 4px 0; outline: 0; font: inherit; color: inherit; }
+.badge { display: inline-flex; align-items: center; gap: 2px; max-width: 100%; padding-block: 3px; padding-inline: 9px 3px; border-radius: 9px; background: var(--sand);
+  font-size: 13px; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; }
+.badge button { display: grid; place-items: center; width: 18px; height: 18px; flex: none; border: 0; border-radius: 6px; background: none; color: var(--muted); cursor: pointer; padding: 0; }
+.badge button:hover { background: rgba(32, 33, 31, .1); color: var(--ink); }
+.select-pop li.add { color: var(--coral-ink); font-weight: 700; }
+
+/* the skills tile as rows (StackField.jsx) */
+.stack-edit { display: grid; gap: 8px; }
+.stack-row { display: grid; grid-template-columns: minmax(0, 9fr) minmax(0, 16fr) 30px; gap: 5px; align-items: start; }
+.stack-row > .btn.icon { margin-top: 8px; padding: 7px; }
+.stack-row .icon-input, .stack-row .chips-input { padding-inline: 10px; gap: 6px; font-size: 14px; }
+.stack-row .badge { font-size: 12.5px; }
+.stack-head { font-size: 12px; font-weight: 600; color: var(--muted); padding-inline: 4px; }
+@media (max-width: 560px) {
+  .stack-row { grid-template-columns: minmax(0, 1fr) 30px; padding-bottom: 6px; border-bottom: 1px solid var(--sand); }
+  .stack-row .chips-input { grid-column: 1 / -1; grid-row: 2; }
+  .stack-head { display: none; }
+}
