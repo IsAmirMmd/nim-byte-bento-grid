@@ -20,7 +20,7 @@ img { max-width: 100%; }
 .mono { font-family: JBM, ui-monospace, monospace; }
 :focus-visible { outline: 3px solid var(--coral-ink); outline-offset: 2px; }
 
-.page { max-width: 1320px; margin: 0 auto; padding: 16px; display: grid; gap: 16px; grid-template-columns: repeat(12, minmax(0, 1fr)); }
+.page { max-width: 1440px; margin: 0 auto; padding: 16px; display: grid; gap: 16px; grid-template-columns: repeat(12, minmax(0, 1fr)); }
 .page > .tile { border-radius: 24px; padding: 24px; }
 .tile.paper { background: var(--paper); } .tile.sand { background: var(--sand); } .tile.ink { background: var(--ink); color: var(--cream); }
 .tile.blue { background: var(--blue-soft); } .tile.coral-soft { background: var(--coral-soft); }
