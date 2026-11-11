@@ -8,14 +8,15 @@ const unit = (s) => s.replace(/(-?\d*\.?\d+)px/g, (_, n) => `calc(${n} * var(--u
 
 export function canvasCss(theme = {}) {
   const raw = css(themeOf(theme), "/fonts");
-  const faces = raw.match(/@font-face[^}]*}/g).join("\n");
   const rules = raw.replace(/@font-face[^}]*}/g, "").replace(/:root\s*{/, ".bc {").replace(/(^|})\s*body\s*{[^}]*}/, "$1");
   const scoped = rules.replace(/(^|})\s*([^{}@]+){/g, (m, end, sel) => {
     if (sel.trim() === ".bc") return `${end} .bc {`;
     return `${end} ${sel.split(",").map((x) => `.bc ${x.trim()}`).join(", ")} {`;
   });
-  // the site's own .label (page.css) mustn't leak its weight into the tiles
-  return `${faces}\n.bc .label { font-weight: normal; }\n${unit(scoped)}`;
+  // The fonts are page.css's (the same files and names): declaring them again here would make the
+  // browser load them anew on every colour change and draw the tiles in a fallback font meanwhile.
+  // And the site's own .label mustn't leak its weight into the tiles.
+  return `.bc .label { font-weight: normal; }\n${unit(scoped)}`;
 }
 
 // The px in a tile's own inline styles get the same treatment.
