@@ -12,6 +12,7 @@
   color-scheme: light;
 }
 * { box-sizing: border-box; }
+button, input, textarea, select { font: inherit; color: inherit; }
 html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--cream); color: var(--ink); font: 16px/1.7 Vazirmatn, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-decoration: none; }

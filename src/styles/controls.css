@@ -18,7 +18,7 @@
 @keyframes pop { from { opacity: 0; transform: translateY(-4px); } }
 
 .segments { display: flex; flex-wrap: wrap; gap: 4px; background: var(--sand); border-radius: 12px; padding: 4px; }
-.segments button { flex: 1 0 auto; border: 0; border-radius: 9px; padding: 5px 9px; background: none; font: 600 13px/1.5 inherit; font-family: inherit;
+.segments button { flex: 1 0 auto; border: 0; border-radius: 9px; padding: 5px 9px; background: none; font: inherit; font-size: 13px; font-weight: 600; line-height: 1.5;
   color: var(--muted); cursor: pointer; }
 .segments button:hover { color: var(--ink); }
 .segments button.on { background: var(--ink); color: var(--cream); }
@@ -91,3 +91,12 @@
 .export-menu button:disabled { cursor: progress; opacity: .7; }
 .export-note { margin: 4px 6px 6px; padding: 8px 10px; border-radius: 10px; background: var(--sand); font-size: 13px; line-height: 1.6; }
 .spin { animation: spin .9s linear infinite; } @keyframes spin { to { rotate: 360deg; } }
+
+/* sliders: a sand track and an ink thumb */
+input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 22px; background: none; cursor: pointer; }
+input[type=range]::-webkit-slider-runnable-track { height: 6px; border-radius: 6px; background: var(--sand); }
+input[type=range]::-moz-range-track { height: 6px; border-radius: 6px; background: var(--sand); }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; margin-top: -6px; border-radius: 50%; border: 0;
+  background: var(--ink); box-shadow: 0 0 0 3px var(--paper), var(--shadow-md); }
+input[type=range]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; border: 0; background: var(--ink); box-shadow: 0 0 0 3px var(--paper); }
+input[type=range]:focus-visible { outline: 0; } input[type=range]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px var(--coral-ink); }
