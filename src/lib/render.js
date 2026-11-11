@@ -1,7 +1,7 @@
 // A tile's HTML for the canvas, drawn by the skill's own code, with pictures resolved: the
 // README's pictures ("images/x.png") come from the user's uploads, then the site's own images.
 import { TILES } from "../skill/tiles.js";
-import { STRINGS } from "../skill/layout.js";
+import { STRINGS, statRows } from "../skill/layout.js";
 import { statTile, yearTile } from "../skill/stat-tiles.js";
 import { sampleStats } from "./sample-stats.js";
 import { scaled } from "./scoped-css.js";
@@ -27,9 +27,13 @@ export function tileHtml(tile, lang, uploads) {
     stack: () => TILES.stack(d, { label: s.stack }),
     experience: () => TILES.experience(d, { label: s.experience }),
     education: () => TILES.education({ label: s.education, ...d }),
+    stat: () => statTile(statData(d.id, lang), sampleStats, lang),
+    year: () => yearTile(statData("year", lang), sampleStats, lang),
   }[tile.kind] ?? (() => TILES[tile.kind](d, {}));
   return scaled(html());
 }
 
+// a stats tile's title and tone, as the skill gives them
+const statData = (id, lang) => statRows({ lang }).flatMap((r) => r.tiles).find((x) => x.id === `stat-${id}`).data;
 export const statHtml = (t, lang) => scaled(t.kind === "stat" ? statTile(t.data, sampleStats, lang) : yearTile(t.data, sampleStats, lang));
-export const MIN = { hero: 300, image: 300, now: 230, feature: 230, contact: 116, photo: 230, quote: 200, number: 180, status: 160 };
+export const MIN = { hero: 300, image: 300, now: 230, feature: 230, contact: 116, photo: 230, quote: 200, number: 180, status: 160, stat: 150, year: 200 };

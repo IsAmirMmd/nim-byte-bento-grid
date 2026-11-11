@@ -1,19 +1,14 @@
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
+import { useDraggable } from "@dnd-kit/core";
+import { MoreHorizontal } from "lucide-react";
 import { useRef, useState } from "react";
 
-// One tile on the canvas: sortable (drag it anywhere), selectable, and with a handle on its
-// inline-end edge that trades width with the next tile in the row.
-export default function TileView({ tile, html, width, minHeight, selected, rowId, last, dir, onSelect, onResize }) {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: tile.key, data: { type: "tile", rowId } });
+// One tile on the canvas: drag it anywhere (it stays put, faded, until it's dropped), click to
+// select, right-click (or ⋯ when selected) for its menu, and drag its inline-end edge to trade
+// width with the next tile in the row.
+export default function TileView({ tile, html, width, minHeight, selected, last, dir, dragged, onSelect, onResize, onMenu }) {
+  const { attributes, listeners, setNodeRef } = useDraggable({ id: tile.key, data: { type: "tile" } });
   const [resizing, setResizing] = useState(false);
   const ref = useRef(null);
-  const style = {
-    width: `${width / 10}%`,
-    minHeight: `calc(${minHeight} * var(--u))`,
-    transform: CSS.Translate.toString(transform),
-    transition,
-  };
 
   function startResize(e) {
     e.stopPropagation();
@@ -34,14 +29,21 @@ export default function TileView({ tile, html, width, minHeight, selected, rowId
   return (
     <div
       ref={(n) => { setNodeRef(n); ref.current = n; }}
-      className={`wrap${selected ? " sel" : ""}${isDragging ? " dragging" : ""}${resizing ? " resizing" : ""}`}
-      style={style}
+      className={`wrap${selected ? " sel" : ""}${dragged ? " dragging" : ""}${resizing ? " resizing" : ""}`}
+      style={{ width: `${width / 10}%`, minHeight: `calc(${minHeight} * var(--u))` }}
       {...attributes}
       {...listeners}
       onClick={() => onSelect(tile.key)}
-      onKeyDown={(e) => { listeners?.onKeyDown?.(e); if (e.key === "Enter") onSelect(tile.key); }}
+      onContextMenu={(e) => { e.preventDefault(); onSelect(tile.key); onMenu(tile.key, e.clientX, e.clientY); }}
+      onKeyDown={(e) => { if (e.key === "Enter") onSelect(tile.key); if (e.key === "ContextMenu") { const r = e.currentTarget.getBoundingClientRect(); onMenu(tile.key, r.left + 20, r.top + 20); } }}
     >
       <div className="tile-html" dangerouslySetInnerHTML={{ __html: html }} />
+      {selected && (
+        <button type="button" className="tile-more" aria-label="menu" onPointerDown={(e) => e.stopPropagation()}
+          onClick={(e) => { e.stopPropagation(); const r = e.currentTarget.getBoundingClientRect(); onMenu(tile.key, r.left, r.bottom + 4); }}>
+          <MoreHorizontal size={18} />
+        </button>
+      )}
       {resizing && <span className="width-badge">{Math.round(width / 10)}%</span>}
       {!last && <span className="rz" onPointerDown={startResize} role="separator" aria-orientation="vertical" aria-label="resize" />}
     </div>

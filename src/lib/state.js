@@ -2,6 +2,11 @@
 // widths on the README's 1000 scale). fromProfile/toProfile convert to and from the skill's profile.json.
 import { fit, rows as defaultRows } from "../skill/layout.js";
 
+// The stats tiles: four counters and the year, placed like any tile (ids stat-<id> in profile.json).
+export const STAT_IDS = ["total", "current", "longest", "views", "year"];
+const statTile = (id) => ({ key: uid(), kind: id === "year" ? "year" : "stat", data: { id } });
+export const isStat = (t) => t.kind === "stat" || t.kind === "year";
+
 export const SINGLE = ["hero", "image", "now", "feature", "stack", "experience", "education"];
 export const LISTS = { project: ["projects", "work"], contact: ["contacts", "contact"], note: ["notes", "note"] };
 export const BLOCKS = ["quote", "chips", "number", "status", "photo", "links"];
@@ -17,11 +22,15 @@ export function fromProfile(p) {
   for (const k of SINGLE) if (p[k] && (!Array.isArray(p[k]) || p[k].length)) add(k, k, p[k]);
   for (const [kind, [list, prefix]] of Object.entries(LISTS)) (p[list] ?? []).forEach((d, i) => add(`${prefix}-${i + 1}`, kind, d));
   (p.blocks ?? []).forEach((b, i) => BLOCKS.includes(b.type) && add(`block-${i + 1}`, b.type, b));
+  if (p.stats !== false) for (const id of STAT_IDS) { const t = statTile(id); tiles.push(t); ids[`stat-${id}`] = t.key; }
   const source = p.layout?.length ? p.layout.map((r) => r.map((e) => (typeof e === "string" ? { id: e } : e)))
     : defaultRows(p).map((r) => r.tiles.map((t) => ({ id: t.id, width: t.width })));
+  if (p.stats !== false && !source.some((r) => r.some((e) => e.id.startsWith("stat-"))))
+    source.push(STAT_IDS.slice(0, 4).map((id) => ({ id: `stat-${id}`, width: 250 })), [{ id: "stat-year", width: 1000 }]);
   const rows = source.map((r) => r.filter((e) => ids[e.id]).map((e) => ({ key: ids[e.id], width: e.width ?? 0 })))
     .filter((r) => r.length).map((items) => ({ id: uid("r"), items: refit(items) }));
-  return { github: p.github ?? "", lang: p.lang === "fa" ? "fa" : "en", stats: p.stats !== false, theme: p.theme ?? {}, tiles, rows };
+  const placed = new Set(rows.flatMap((r) => r.items.map((e) => e.key)));
+  return { github: p.github ?? "", lang: p.lang === "fa" ? "fa" : "en", stats: p.stats !== false, theme: p.theme ?? {}, tiles: tiles.filter((t) => placed.has(t.key)), rows };
 }
 
 export function toProfile(s) {
@@ -31,7 +40,8 @@ export function toProfile(s) {
   p.layout = s.rows.map((r) => r.items.map((e) => {
     const t = byKey.get(e.key);
     let id = t.kind;
-    if (SINGLE.includes(t.kind)) p[t.kind] = t.data;
+    if (isStat(t)) id = `stat-${t.data.id}`;
+    else if (SINGLE.includes(t.kind)) p[t.kind] = t.data;
     else if (LISTS[t.kind]) {
       const [list, prefix] = LISTS[t.kind];
       (p[list] ??= []).push(t.data);
@@ -67,6 +77,23 @@ export const BLANK = {
   links: { label: "Elsewhere", items: [{ name: "Blog", value: "example.com/blog" }], tone: "paper" },
 };
 export const newTile = (kind) => ({ key: uid(), kind, data: structuredClone(BLANK[kind]) });
+
+// Turning the stats on adds their two rows at the end; off removes every stats tile.
+export function setStats(m, on) {
+  m.stats = on;
+  const keys = new Set(m.tiles.filter(isStat).map((t) => t.key));
+  if (!on) {
+    m.tiles = m.tiles.filter((t) => !keys.has(t.key));
+    m.rows = m.rows.map((r) => ({ ...r, items: refit(r.items.filter((e) => !keys.has(e.key))) })).filter((r) => r.items.length);
+  } else if (!keys.size) {
+    const tiles = STAT_IDS.map(statTile);
+    m.tiles.push(...tiles);
+    m.rows.push({ id: uid("r"), items: tiles.slice(0, 4).map((t) => ({ key: t.key, width: 250 })) }, { id: uid("r"), items: [{ key: tiles[4].key, width: 1000 }] });
+  }
+}
+
+// A copy of a tile, right after it in its row (singles and stats tiles have no copies).
+export const canCopy = (t) => !isStat(t) && !SINGLE.includes(t.kind);
 
 export function save(s) { try { localStorage.setItem(STORE, JSON.stringify({ ...s, images: undefined })); } catch {} }
 export function load() { try { return JSON.parse(localStorage.getItem(STORE)); } catch { return null; } }

@@ -1,101 +1,35 @@
-import { DndContext, DragOverlay, KeyboardSensor, MeasuringStrategy, MouseSensor, TouchSensor, pointerWithin, rectIntersection, useSensor, useSensors } from "@dnd-kit/core";
-import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
+import { DndContext, DragOverlay, MeasuringStrategy } from "@dnd-kit/core";
 import { FileDown, FileUp, RotateCcw, Wand2 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import defaultProfile from "../../data/default-profile.json";
-import { fromProfile, toProfile, newTile, refit, uid, save, load, forget } from "../../lib/state.js";
+import { fromProfile, toProfile, newTile, uid, save, load, forget, setStats } from "../../lib/state.js";
+import { preview } from "../../lib/drop.js";
 import { makePrompt, pictures } from "../../lib/prompt.js";
 import { tileHtml } from "../../lib/render.js";
 import { KIND_TEXT } from "../../i18n.js";
+import { act, menuItems, rowOf, take } from "./actions.js";
+import { useBoardDrag } from "./useBoardDrag.js";
 import Canvas from "./Canvas.jsx";
+import ContextMenu from "./ContextMenu.jsx";
 import Library, { ICONS } from "./Library.jsx";
 import Panel from "./Panel.jsx";
 import PromptDialog from "./PromptDialog.jsx";
 import "../../styles/workspace.css";
+import "../../styles/controls.css";
 
 const MIN_W = 120;
-const rowOf = (m, key) => m.rows.findIndex((r) => r.items.some((e) => e.key === key));
-const collide = (args) => { const hits = pointerWithin(args); return hits.length ? hits : rectIntersection(args); };
-
-// Takes a tile out of its row (dropping the row when it empties) and returns its entry.
-function take(m, key) {
-  const i = rowOf(m, key);
-  const entry = m.rows[i].items.find((e) => e.key === key);
-  m.rows[i].items = m.rows[i].items.filter((e) => e.key !== key);
-  if (!m.rows[i].items.length) m.rows.splice(i, 1);
-  else m.rows[i].items = refit(m.rows[i].items);
-  return { entry, row: i };
-}
-// Puts an entry in row i at position k, giving it an equal share of the row.
-function put(m, i, k, entry) {
-  const items = m.rows[i].items;
-  items.splice(k, 0, { ...entry, width: 1000 / (items.length + 1) });
-  m.rows[i].items = refit(items);
-}
 
 export default function Workspace({ t, lang }) {
-  const [model, setModel] = useState(() => load() ?? fromProfile(defaultProfile));
+  const [model, setModel] = useState(() => { const m = load(); return m?.rows ? m : fromProfile(defaultProfile); });
   const [uploads, setUploads] = useState({});
   const [selected, setSelected] = useState(null);
-  const [active, setActive] = useState(null);
+  const [menu, setMenu] = useState(null);
   const [promptOpen, setPromptOpen] = useState(false);
   const canvasRef = useRef(null);
-  const sensors = useSensors(
-    useSensor(MouseSensor, { activationConstraint: { distance: 6 } }),
-    useSensor(TouchSensor, { activationConstraint: { delay: 180, tolerance: 8 } }),
-    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
-  );
   useEffect(() => save(model), [model]);
-  const change = (fn) => setModel((m) => { const n = structuredClone(m); fn(n); return n; });
-
-  function dragStart({ active: a }) {
-    const u = (canvasRef.current?.querySelector(".bc-stage")?.getBoundingClientRect().width ?? 1040) / 1040;
-    setActive({ id: a.id, ...a.data.current, u });
-  }
-  function dragOver({ active: a, over }) {
-    if (a.data.current?.type !== "tile" || !over) return;
-    const o = over.data.current;
-    if (o?.type === "tile" || o?.type === "row") change((m) => {
-      const from = rowOf(m, a.id);
-      const to = o.type === "tile" ? rowOf(m, over.id) : m.rows.findIndex((r) => r.id === o.rowId);
-      if (from < 0 || to < 0 || from === to) return;
-      const target = m.rows[to].id;
-      const { entry } = take(m, a.id);
-      const i = m.rows.findIndex((r) => r.id === target);
-      const k = o.type === "tile" ? m.rows[i].items.findIndex((e) => e.key === over.id) : m.rows[i].items.length;
-      put(m, i, Math.max(0, k), entry);
-    });
-  }
-  function dragEnd({ active: a, over }) {
-    setActive(null);
-    const kind = a.data.current?.type === "library" ? a.data.current.kind : null;
-    const o = over?.data.current;
-    const fresh = kind ? newTile(kind) : null;
-    const newRow = uid("r");
-    if (fresh) setSelected(fresh.key);
-    change((m) => {
-      let entry;
-      if (fresh) {
-        m.tiles.push(structuredClone(fresh));
-        entry = { key: fresh.key, width: 1000 };
-      } else if (o?.type === "gap") entry = take(m, a.id).entry;
-      if (o?.type === "gap" || (kind && !o)) {
-        let at = o ? o.index : m.rows.length;
-        if (!kind && m.rows.length && at > m.rows.length) at = m.rows.length;
-        m.rows.splice(Math.min(at, m.rows.length), 0, { id: newRow, items: [{ ...entry, width: 1000 }] });
-      } else if (kind && o) {
-        const i = o.type === "tile" ? rowOf(m, over.id) : m.rows.findIndex((r) => r.id === o.rowId);
-        const k = o.type === "tile" ? m.rows[i].items.findIndex((e) => e.key === over.id) + 1 : m.rows[i].items.length;
-        put(m, i, k, entry);
-      } else if (o?.type === "tile" && a.id !== over.id) {
-        const i = rowOf(m, a.id);
-        if (i === rowOf(m, over.id)) {
-          const items = m.rows[i].items;
-          m.rows[i].items = arrayMove(items, items.findIndex((e) => e.key === a.id), items.findIndex((e) => e.key === over.id));
-        }
-      }
-    });
-  }
+  const change = useCallback((fn) => setModel((m) => { const n = structuredClone(m); fn(n); return n; }), []);
+  const { drag, sensors, collide, handlers } = useBoardDrag({ model, change, canvasRef, onPlaced: setSelected });
+  const closeMenu = useCallback(() => setMenu(null), []);
 
   function add(kind) {
     const tile = newTile(kind);
@@ -122,6 +56,13 @@ export default function Workspace({ t, lang }) {
   });
   const remove = (key) => { change((m) => { take(m, key); m.tiles = m.tiles.filter((x) => x.key !== key); }); setSelected(null); };
   const setData = (key, data) => change((m) => { m.tiles.find((x) => x.key === key).data = data; });
+  function pick(id) {
+    const key = menu.key;
+    if (id === "edit") return setSelected(key);
+    const copy = uid();
+    change((m) => act(m, key, id, copy));
+    setSelected(id === "remove" ? null : id === "copy" ? copy : key);
+  }
   function image(key, field, file) {
     const name = file.name.toLowerCase().replace(/[^a-z0-9.\-_]+/g, "-");
     setUploads((u) => ({ ...u, [name]: URL.createObjectURL(file) }));
@@ -138,13 +79,14 @@ export default function Workspace({ t, lang }) {
     setModel(fromProfile(JSON.parse(await file.text())));
     setSelected(null);
   }
+  const settings = (s) => change((m) => { if ("stats" in s) setStats(m, s.stats); else Object.assign(m, s); });
 
   const tile = model.tiles.find((x) => x.key === selected);
   const width = tile ? model.rows[rowOf(model, tile.key)]?.items.find((e) => e.key === tile.key)?.width ?? 1000 : 0;
   const profile = toProfile(model);
   const prompt = makePrompt(profile, pictures(profile, window.location.origin, uploads), lang);
-  const overlayTile = active?.type === "tile" ? model.tiles.find((x) => x.key === active.id) : null;
-  const OverlayIcon = active?.type === "library" ? ICONS[active.kind] : null;
+  const overlayTile = drag && !drag.kind ? model.tiles.find((x) => x.key === drag.key) : null;
+  const OverlayIcon = drag?.kind ? ICONS[drag.kind] : null;
 
   return (
     <section id="workspace" className="tile paper workspace">
@@ -157,27 +99,27 @@ export default function Workspace({ t, lang }) {
           <button type="button" className="btn coral" onClick={() => setPromptOpen(true)}><Wand2 size={18} />{t.ws.prompt}</button>
         </div>
       </div>
-      <DndContext sensors={sensors} collisionDetection={collide} measuring={{ droppable: { strategy: MeasuringStrategy.Always } }}
-        onDragStart={dragStart} onDragOver={dragOver} onDragEnd={dragEnd} onDragCancel={() => setActive(null)}>
+      <DndContext sensors={sensors} collisionDetection={collide} autoScroll={{ threshold: { x: 0, y: 0.08 }, layoutShiftCompensation: false }} measuring={{ droppable: { strategy: MeasuringStrategy.Always } }} {...handlers}>
         <div className="ws-body">
           <Library t={t} lang={lang} tiles={model.tiles} onAdd={add} />
           <div className="ws-canvas" ref={canvasRef}>
-            <Canvas model={model} uploads={uploads} selected={selected} dragging={Boolean(active)} t={t}
-              onSelect={setSelected} onResize={resize} />
+            <Canvas model={model} rows={drag ? preview(model.rows, drag.key, drag.target) : model.rows} uploads={uploads} selected={selected}
+              drag={drag} t={t} onSelect={setSelected} onResize={resize} onMenu={(key, x, y) => setMenu({ key, x, y })} />
           </div>
           <Panel t={t} lang={lang} model={model} tile={tile} width={width}
             onData={(d) => setData(tile.key, d)} onImage={(f, file) => image(tile.key, f, file)} onWidth={(w) => setWidth(tile.key, w)}
-            onRemove={() => remove(tile.key)} onClose={() => setSelected(null)} onSettings={(s) => change((m) => Object.assign(m, s))} />
+            onRemove={() => remove(tile.key)} onClose={() => setSelected(null)} onSettings={settings} uploads={uploads} />
         </div>
-        <DragOverlay dropAnimation={{ duration: 220, easing: "cubic-bezier(.2,.8,.2,1)" }}>
+        <DragOverlay dropAnimation={null}>
           {overlayTile && (
-            <div className="bc drag-overlay" style={{ "--u": `${active.u}px` }} dir={model.lang === "fa" ? "rtl" : "ltr"}>
+            <div className="bc drag-overlay" style={{ "--u": `${drag.u}px` }} dir={model.lang === "fa" ? "rtl" : "ltr"}>
               <div className="wrap" style={{ width: "100%", height: "100%" }}><div className="tile-html" dangerouslySetInnerHTML={{ __html: tileHtml(overlayTile, model.lang, uploads) }} /></div>
             </div>
           )}
-          {OverlayIcon && <div className="lib-ghost"><span className="lib-icon"><OverlayIcon size={18} /></span><b>{KIND_TEXT[lang][active.kind][0]}</b></div>}
+          {OverlayIcon && <div className="lib-ghost"><span className="lib-icon"><OverlayIcon size={18} /></span><b>{KIND_TEXT[lang][drag.kind][0]}</b></div>}
         </DragOverlay>
       </DndContext>
+      <ContextMenu menu={menu} items={menu ? menuItems(model, menu.key) : []} labels={t.menu} onPick={pick} onClose={closeMenu} />
       <PromptDialog t={t} open={promptOpen} text={prompt} onClose={() => setPromptOpen(false)} onDownload={download} />
     </section>
   );

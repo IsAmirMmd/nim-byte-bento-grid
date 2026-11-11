@@ -22,6 +22,10 @@ export const T = {
       promptHelp: "این متن را به Claude Code، Codex، Cursor یا هر ایجنتی که دارید بدهید. عکس‌هایی را که آپلود کرده‌اید هم کنارش بفرستید.",
       statsNote: "آمار نمونه است؛ عددهای واقعی بعد از ساخت از گیت‌هاب می‌آیند.", empty: "کاشی‌ای نمانده؛ از فهرست یکی اضافه کنید.",
     },
+    menu: { edit: "ویرایش", copy: "کپی کاشی", ownRow: "ردیف جدا", equal: "پهنای برابر در ردیف", up: "بردن به بالا", down: "بردن به پایین", remove: "حذف" },
+    img: { drag: "بکشید تا جای عکس عوض شود", zoom: "بزرگ‌نمایی", fit: "پر کردن کاشی", cover: "پر کند", contain: "کامل دیده شود",
+      mask: "ماسک", rounded: "گوشه‌گرد", square: "چهارگوش", circle: "دایره", arch: "طاقی", capPos: "جای زیرنویس", below: "زیر عکس",
+      "top-right": "بالا راست", "top-left": "بالا چپ", "bottom-right": "پایین راست", "bottom-left": "پایین چپ", reset: "برگرداندن برش" },
     footer: { line: "سایت، داشبورد، ربات تلگرام و مینی اپ تلگرام می‌سازیم.", made: "ساخته‌ی نیم‌بایت", visit: "nimbyte.ir" },
   },
   en: {
@@ -45,6 +49,10 @@ export const T = {
       promptHelp: "Give this to Claude Code, Codex, Cursor or any agent you use, with the pictures you uploaded.",
       statsNote: "Sample numbers; the real ones come from GitHub once it's built.", empty: "No tiles left: add one from the list.",
     },
+    menu: { edit: "Edit", copy: "Duplicate", ownRow: "Own row", equal: "Equal widths in row", up: "Move up", down: "Move down", remove: "Delete" },
+    img: { drag: "Drag to move the picture", zoom: "Zoom", fit: "Fill", cover: "Cover", contain: "Show whole",
+      mask: "Mask", rounded: "Rounded", square: "Square", circle: "Circle", arch: "Arch", capPos: "Caption", below: "Below",
+      "top-right": "Top right", "top-left": "Top left", "bottom-right": "Bottom right", "bottom-left": "Bottom left", reset: "Reset crop" },
     footer: { line: "Websites, dashboards, Telegram bots and Mini Apps.", made: "Made by nimbyte", visit: "nimbyte.ir" },
   },
 };
@@ -57,7 +65,7 @@ export const KIND_TEXT = {
     education: ["تحصیلات", "رشته و دانشگاه"], project: ["پروژه", "اسکرین‌شات، اسم و لینک"], contact: ["راه ارتباطی", "یک یوزرنیم یا آدرس"],
     note: ["یادداشت", "عنوان و یک خط متن"], quote: ["نقل‌قول", "یک جمله و گوینده‌اش"], chips: ["برچسب‌ها", "مثلاً در حال یادگیری"],
     number: ["عدد", "یک عدد بزرگ با توضیح"], status: ["وضعیت", "مثلاً آماده‌ی همکاری"], photo: ["عکس تمام‌قد", "عکسی که کل کاشی را پر می‌کند"],
-    links: ["لینک‌ها", "فهرست کوتاه لینک"],
+    links: ["لینک‌ها", "فهرست کوتاه لینک"], stat: ["آمار گیت‌هاب", "عددهایش از گیت‌هاب می‌آید"], year: ["یک سال گیت‌هاب", "جدول مشارکت‌های یک سال"],
   },
   en: {
     hero: ["Intro", "Your name and one line"], image: ["Picture", "A photo or avatar with a caption"], now: ["Now", "What you do now"],
@@ -65,15 +73,20 @@ export const KIND_TEXT = {
     education: ["Education", "Degree and school"], project: ["Project", "A screenshot, a name and a link"], contact: ["Contact", "A handle or an address"],
     note: ["Note", "A title and a line"], quote: ["Quote", "A sentence and who said it"], chips: ["Chips", "Like what you're learning"],
     number: ["Number", "A big number with a line"], status: ["Status", "Like open to work"], photo: ["Photo", "A picture filling the tile"],
-    links: ["Links", "A short list of links"],
+    links: ["Links", "A short list of links"], stat: ["GitHub stat", "Its number comes from GitHub"], year: ["A year on GitHub", "The contribution calendar"],
   },
 };
 
 export const FIELD_TEXT = {
   fa: { label: "برچسب", title: "عنوان", lead: "توضیح", chips: "برچسب‌ها (با کاما جدا کنید)", src: "عکس", caption: "زیرنویس", tone: "رنگ", href: "لینک",
     meta: "خط دوم", text: "متن", subtitle: "زیرعنوان", titleDir: "جهت عنوان", groups: "هر خط: گروه: مورد، مورد", lines: "هر خط: زمان | نقش | جا",
-    image: "اسکرین‌شات واقعی", value: "مقدار", author: "گوینده", items: "مورد‌ها (با کاما جدا کنید)", linkItems: "هر خط: اسم | مقدار", upload: "انتخاب عکس" },
+    image: "اسکرین‌شات واقعی", value: "مقدار", author: "گوینده", items: "مورد‌ها (با کاما جدا کنید)", linkItems: "هر خط: اسم | مقدار", upload: "انتخاب عکس", "dir-auto": "خودکار", "dir-rtl": "راست به چپ", "dir-ltr": "چپ به راست" },
   en: { label: "Label", title: "Title", lead: "Lead", chips: "Chips (comma-separated)", src: "Picture", caption: "Caption", tone: "Tone", href: "Link",
     meta: "Second line", text: "Text", subtitle: "Subtitle", titleDir: "Title direction", groups: "One per line: Group: item, item", lines: "One per line: when | role | where",
-    image: "A real screenshot", value: "Value", author: "Author", items: "Items (comma-separated)", linkItems: "One per line: name | value", upload: "Choose a picture" },
+    image: "A real screenshot", value: "Value", author: "Author", items: "Items (comma-separated)", linkItems: "One per line: name | value", upload: "Choose a picture", "dir-auto": "Auto", "dir-rtl": "Right to left", "dir-ltr": "Left to right" },
+};
+
+export const TONE_TEXT = {
+  fa: { paper: "کاغذی", sand: "شنی", "accent-soft": "مرجانی روشن", blue: "آبی روشن", green: "سبز روشن" },
+  en: { paper: "Paper", sand: "Sand", "accent-soft": "Soft coral", blue: "Soft blue", green: "Soft green" },
 };

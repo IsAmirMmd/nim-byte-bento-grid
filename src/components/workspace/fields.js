@@ -1,5 +1,7 @@
 // The form fields of each kind of tile, and how list-like fields read and write the tile's data.
 export const TONES = ["paper", "sand", "accent-soft", "blue", "green"];
+// the tone a tile has when none is set (as tiles.js draws it)
+export const TONE_OF = { image: "accent-soft", quote: "accent-soft", number: "sand", status: "green" };
 export const FIELDS = {
   hero: ["label", "title", ["lead", "area"], ["chips", "list"]],
   image: [["src", "image"], "caption", ["tone", "tone"], "href"],
@@ -17,6 +19,7 @@ export const FIELDS = {
   status: ["label", "title", "text", ["tone", "tone"], "href"],
   photo: [["src", "image"], "caption", "href"],
   links: ["label", ["items", "links"], ["tone", "tone"], "href"],
+  stat: [], year: [],
 };
 
 const split = (v) => v.split(/[,،]/).map((x) => x.trim()).filter(Boolean);
