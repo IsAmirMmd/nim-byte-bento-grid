@@ -1,0 +1,27 @@
+{
+  "name": "nim-byte-bento-grid",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Arrange a bento-grid GitHub profile README, edit its tiles, and get a prompt for your AI agent to build it.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "6.3.1",
+    "@dnd-kit/sortable": "10.0.0",
+    "@dnd-kit/utilities": "3.2.2",
+    "lucide-react": "1.71.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "6.3.0",
+    "vite": "8.3.8"
+  },
+  "engines": {
+    "node": ">=20.19"
+  }
+}
