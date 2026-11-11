@@ -1,4 +1,5 @@
-import { ArrowDown, Bot, Github } from "lucide-react";
+import { ArrowDown, Bot } from "lucide-react";
+import GithubMark from "./GithubMark.jsx";
 
 export default function Hero({ t }) {
   const h = t.hero;
@@ -9,7 +10,7 @@ export default function Hero({ t }) {
         <p className="lead">{h.lead}</p>
         <div className="actions">
           <a className="btn dark" href="#workspace"><ArrowDown size={18} />{h.start}</a>
-          <a className="btn" href="https://github.com/IsAmirMmd/nim-byte-readme-maker"><Github size={18} />{h.skill}</a>
+          <a className="btn" href="https://github.com/IsAmirMmd/nim-byte-readme-maker"><GithubMark size={18} />{h.skill}</a>
         </div>
       </section>
       <section className="tile ink steps">
