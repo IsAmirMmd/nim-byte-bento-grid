@@ -1,5 +1,5 @@
 import { DndContext, DragOverlay, MeasuringStrategy } from "@dnd-kit/core";
-import { FileDown, FileUp, RotateCcw, Wand2 } from "lucide-react";
+import { FileUp, RotateCcw, Wand2 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import defaultProfile from "../../data/default-profile.json";
 import { fromProfile, toProfile, newTile, uid, save, load, forget, setStats } from "../../lib/state.js";
@@ -14,6 +14,7 @@ import ContextMenu from "./ContextMenu.jsx";
 import Library, { ICONS } from "./Library.jsx";
 import Panel from "./Panel.jsx";
 import PromptDialog from "./PromptDialog.jsx";
+import ExportMenu from "./ExportMenu.jsx";
 import "../../styles/workspace.css";
 import "../../styles/controls.css";
 
@@ -79,6 +80,11 @@ export default function Workspace({ t, lang }) {
     setModel(fromProfile(JSON.parse(await file.text())));
     setSelected(null);
   }
+  async function exportAs(kind) {
+    if (kind === "json") return download();
+    const { exportPng, exportPdf, exportZip } = await import("../../lib/export/index.js");
+    return { png: exportPng, pdf: exportPdf, zip: exportZip }[kind](toProfile(model), uploads);
+  }
   const settings = (s) => change((m) => { if ("stats" in s) setStats(m, s.stats); else Object.assign(m, s); });
 
   const tile = model.tiles.find((x) => x.key === selected);
@@ -95,7 +101,7 @@ export default function Workspace({ t, lang }) {
         <div className="ws-actions">
           <button type="button" className="btn ghost" onClick={() => { forget(); setModel(fromProfile(defaultProfile)); setSelected(null); }}><RotateCcw size={16} />{t.ws.reset}</button>
           <label className="btn ghost file"><FileUp size={16} />{t.ws.importJson}<input type="file" accept=".json,application/json" onChange={importJson} /></label>
-          <button type="button" className="btn ghost" onClick={download}><FileDown size={16} />{t.ws.exportJson}</button>
+          <ExportMenu x={t.export} onExport={exportAs} />
           <button type="button" className="btn coral" onClick={() => setPromptOpen(true)}><Wand2 size={18} />{t.ws.prompt}</button>
         </div>
       </div>

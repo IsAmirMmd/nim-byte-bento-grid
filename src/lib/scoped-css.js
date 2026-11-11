@@ -14,7 +14,8 @@ export function canvasCss(theme = {}) {
     if (sel.trim() === ".bc") return `${end} .bc {`;
     return `${end} ${sel.split(",").map((x) => `.bc ${x.trim()}`).join(", ")} {`;
   });
-  return `${faces}\n${unit(scoped)}`;
+  // the site's own .label (page.css) mustn't leak its weight into the tiles
+  return `${faces}\n.bc .label { font-weight: normal; }\n${unit(scoped)}`;
 }
 
 // The px in a tile's own inline styles get the same treatment.
