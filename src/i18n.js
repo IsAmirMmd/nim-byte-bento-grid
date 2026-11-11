@@ -32,6 +32,9 @@ export const T = {
       pdf: ["فایل PDF", "کل README در یک صفحه"], json: ["profile.json", "برای ایجنت یا وارد کردن دوباره"],
       zipDone: "فایل ZIP را در ریپوی <user>/<user> باز کنید و پوش کنید؛ README.md فعلی جایگزین می‌شود. آمار گیت‌هاب بعد از پوش با workflow اضافه می‌شود.",
       zipSkipped: "اسکریپت‌های اسکیل از گیت‌هاب نیامدند؛ ZIP فقط README و عکس‌ها را دارد.", failed: "ساخت خروجی نشد؛ دوباره امتحان کنید." },
+    why: { single: (name) => `«${name}» فقط یک بار در README می‌آید و الان روی صفحه است. بزنید تا نشانتان بدهیم.`,
+      singleCopy: "این کاشی فقط یک بار در README می‌آید.", statCopy: "هر کاشی آمار یک بار می‌آید.",
+      alone: "این کاشی تنها کاشی ردیفش است.", first: "این اولین ردیف است.", last: "این آخرین ردیف است." },
     footer: { line: "سایت، داشبورد، ربات تلگرام و مینی اپ تلگرام می‌سازیم.", made: "ساخته‌ی نیم‌بایت", visit: "nimbyte.ir" },
   },
   en: {
@@ -65,6 +68,9 @@ export const T = {
       pdf: ["PDF", "The whole README on one page"], json: ["profile.json", "For your agent, or to import later"],
       zipDone: "Unzip it in your <user>/<user> repository and push; it replaces README.md. The GitHub stats join after the push, from the workflow.",
       zipSkipped: "The skill's scripts couldn't be fetched from GitHub; the ZIP has the README and pictures only.", failed: "The export failed; try again." },
+    why: { single: (name) => `There's one "${name}" tile per README, and it's already on the canvas. Click to see it.`,
+      singleCopy: "This tile appears once per README.", statCopy: "Each stats tile appears once.",
+      alone: "It's the only tile in its row.", first: "It's already the first row.", last: "It's already the last row." },
     footer: { line: "Websites, dashboards, Telegram bots and Mini Apps.", made: "Made by nimbyte", visit: "nimbyte.ir" },
   },
 };

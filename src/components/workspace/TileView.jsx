@@ -29,6 +29,7 @@ export default function TileView({ tile, html, width, minHeight, selected, last,
   return (
     <div
       ref={(n) => { setNodeRef(n); ref.current = n; }}
+      data-key={tile.key}
       className={`wrap${selected ? " sel" : ""}${dragged ? " dragging" : ""}${resizing ? " resizing" : ""}`}
       style={{ width: `${width / 10}%`, minHeight: `calc(${minHeight} * var(--u))` }}
       {...attributes}

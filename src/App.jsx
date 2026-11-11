@@ -4,6 +4,7 @@ import Header from "./components/Header.jsx";
 import Hero from "./components/Hero.jsx";
 import Footer from "./components/Footer.jsx";
 import Workspace from "./components/workspace/Workspace.jsx";
+import Tip from "./components/Tip.jsx";
 
 const KEY = "nim-byte-bento-grid-ui";
 const saved = () => { try { return localStorage.getItem(KEY); } catch { return null; } };
@@ -23,6 +24,7 @@ export default function App() {
       <Hero t={t} />
       <Workspace t={t} lang={lang} />
       <Footer t={t} />
+      <Tip />
     </div>
   );
 }

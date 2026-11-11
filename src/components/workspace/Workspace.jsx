@@ -26,8 +26,19 @@ export default function Workspace({ t, lang }) {
   const [selected, setSelected] = useState(null);
   const [menu, setMenu] = useState(null);
   const [promptOpen, setPromptOpen] = useState(false);
+  const [reveal, setReveal] = useState(null); // a tile to scroll to and flash: one just added, or asked for
   const canvasRef = useRef(null);
   useEffect(() => save(model), [model]);
+  useEffect(() => {
+    if (!reveal) return;
+    const el = canvasRef.current?.querySelector(`[data-key="${reveal}"]`);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "center" });
+    el.classList.remove("flash");
+    void el.offsetWidth;
+    el.classList.add("flash");
+    setReveal(null);
+  }, [reveal, model]);
   const change = useCallback((fn) => setModel((m) => { const n = structuredClone(m); fn(n); return n; }), []);
   const { drag, sensors, collide, handlers } = useBoardDrag({ model, change, canvasRef, onPlaced: setSelected });
   const closeMenu = useCallback(() => setMenu(null), []);
@@ -37,6 +48,11 @@ export default function Workspace({ t, lang }) {
     const row = uid("r");
     change((m) => { m.tiles.push(structuredClone(tile)); m.rows.push({ id: row, items: [{ key: tile.key, width: 1000 }] }); });
     setSelected(tile.key);
+    setReveal(tile.key);
+  }
+  function show(kind) {
+    const tile = model.tiles.find((x) => x.kind === kind);
+    if (tile) { setSelected(tile.key); setReveal(tile.key); }
   }
   const resize = (key, delta) => change((m) => {
     const row = m.rows[rowOf(m, key)].items;
@@ -63,6 +79,7 @@ export default function Workspace({ t, lang }) {
     const copy = uid();
     change((m) => act(m, key, id, copy));
     setSelected(id === "remove" ? null : id === "copy" ? copy : key);
+    if (id !== "remove") setReveal(id === "copy" ? copy : key);
   }
   function image(key, field, file) {
     const name = file.name.toLowerCase().replace(/[^a-z0-9.\-_]+/g, "-");
@@ -107,7 +124,7 @@ export default function Workspace({ t, lang }) {
       </div>
       <DndContext sensors={sensors} collisionDetection={collide} autoScroll={{ threshold: { x: 0, y: 0.08 }, layoutShiftCompensation: false }} measuring={{ droppable: { strategy: MeasuringStrategy.Always } }} {...handlers}>
         <div className="ws-body">
-          <Library t={t} lang={lang} tiles={model.tiles} onAdd={add} />
+          <Library t={t} lang={lang} tiles={model.tiles} onAdd={add} onReveal={show} />
           <div className="ws-canvas" ref={canvasRef}>
             <Canvas model={model} rows={drag ? preview(model.rows, drag.key, drag.target) : model.rows} uploads={uploads} selected={selected}
               drag={drag} t={t} onSelect={setSelected} onResize={resize} onMenu={(key, x, y) => setMenu({ key, x, y })} />
@@ -125,7 +142,7 @@ export default function Workspace({ t, lang }) {
           {OverlayIcon && <div className="lib-ghost"><span className="lib-icon"><OverlayIcon size={18} /></span><b>{KIND_TEXT[lang][drag.kind][0]}</b></div>}
         </DragOverlay>
       </DndContext>
-      <ContextMenu menu={menu} items={menu ? menuItems(model, menu.key) : []} labels={t.menu} onPick={pick} onClose={closeMenu} />
+      <ContextMenu menu={menu} items={menu ? menuItems(model, menu.key) : []} labels={t.menu} why={t.why} onPick={pick} onClose={closeMenu} />
       <PromptDialog t={t} open={promptOpen} text={prompt} onClose={() => setPromptOpen(false)} onDownload={download} />
     </section>
   );

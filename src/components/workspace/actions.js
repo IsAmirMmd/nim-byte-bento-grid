@@ -19,9 +19,12 @@ export function menuItems(m, key) {
   const t = m.tiles.find((x) => x.key === key);
   const r = rowOf(m, key);
   const alone = m.rows[r]?.items.length === 1;
+  // a disabled item says why (the reason's text is in i18n's why)
+  const no = (id, when, reason) => ({ id, disabled: when, reason });
   return [
-    { id: "edit" }, { id: "copy", disabled: !canCopy(t) }, { id: "ownRow", disabled: alone }, { id: "equal", disabled: alone },
-    { id: "up", disabled: alone && r === 0 }, { id: "down", disabled: alone && r === m.rows.length - 1 }, { id: "remove" },
+    { id: "edit" }, no("copy", !canCopy(t), t.kind === "stat" || t.kind === "year" ? "statCopy" : "singleCopy"),
+    no("ownRow", alone, "alone"), no("equal", alone, "alone"),
+    no("up", alone && r === 0, "first"), no("down", alone && r === m.rows.length - 1, "last"), { id: "remove" },
   ];
 }
 

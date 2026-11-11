@@ -15,7 +15,7 @@
   padding: 8px 10px; cursor: grab; font: inherit; color: inherit; box-shadow: var(--shadow-md); transition: transform .15s, box-shadow .15s, opacity .15s;
   touch-action: manipulation; }
 .lib-item:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
-.lib-item:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
+.lib-item[aria-disabled=true] { opacity: .5; cursor: help; transform: none; box-shadow: none; }
 .lib-item.lifting { opacity: .4; }
 .lib-icon { width: 34px; height: 34px; flex: none; display: grid; place-items: center; border-radius: 10px; background: var(--coral-soft); color: var(--coral-ink); }
 .lib-text { display: grid; line-height: 1.35; } .lib-text b { font-size: 14px; } .lib-text small { color: var(--muted); font-size: 12px; }
