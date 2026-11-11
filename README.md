@@ -1,25 +1,7 @@
-# nim-byte-bento-grid
-
-**[nim-byte-bento-grid.vercel.app](https://nim-byte-bento-grid.vercel.app/)**: an editor for a bento-grid GitHub profile
-README, by [نیم‌بایت](https://nimbyte.ir). Drag the tiles around, drag their edges to change widths, pick new tiles from
-the list, write their text, then copy one prompt and give it to your AI agent (Claude Code, Codex, Cursor, Copilot,
-Gemini CLI, …). The agent builds the README with the
-[bento-readme skill](https://github.com/IsAmirMmd/nim-byte-readme-maker) and puts it on your profile.
-
-The editor opens with [IsAmirMmd's README](https://github.com/IsAmirMmd); everything you change is kept in your browser.
-
-## What's inside
-
-- **The page** is a bento grid of its own: header, hero, the workspace in one big tile, and a footer. Persian
-  (right to left) by default, English with one click.
-- **The canvas** draws the README with the skill's own tile code (`src/skill/`), so what you see is what the agent
-  builds. Its CSS is scoped to the canvas and sized in units of the canvas's width (`src/lib/scoped-css.js`).
-- **Drag and drop** with [dnd-kit](https://dndkit.com): tiles lift, the others make room, rows accept tiles from other
-  rows, and strips between rows start new ones. Works with a mouse, on touch screens and with the keyboard.
-- **Sixteen kinds of tile**: intro, picture, now, feature, stack, experience, education, project, contact, note,
-  quote, chips, number, status, photo and links.
-- **The prompt** carries the whole layout as the skill's `profile.json`, with links to the site's own pictures and a
-  list of the ones you uploaded, to attach.
+<!-- bento:start -->
+<!-- Made with bento-readme: tiles in assets/bento/v2/, drawn from .bento/profile.json by .bento/scripts/build.mjs. -->
+<p align="center"><img src="assets/bento/v2/hero.png" width="63.9%" align="top" alt="Build your GitHub README as a bento grid. · nim-byte-bento-grid · Drag tiles, size them, write their text, then hand one prompt (or a ZIP) to your AI agent. This README was made the same way."/><a href="https://nim-byte-bento-grid.vercel.app/"><img src="assets/bento/v2/feature.png" width="35.9%" align="top" alt="Open the editor · Try it · Free, in your browser, with nothing to sign up for. Persian or English."/></a><br/><a href="https://nim-byte-bento-grid.vercel.app/#workspace"><img src="assets/bento/v2/work-1.png" width="99.9%" align="top" alt="The workspace · The tile list, the README as it will look, and the panel for the selected tile"/></a><br/><img src="assets/bento/v2/block-1.png" width="33.2%" align="top" alt="Step 1 · Drag tiles anywhere, drag an edge to resize, pick new ones from the list. · Arrange"/><img src="assets/bento/v2/block-2.png" width="33.2%" align="top" alt="Step 2 · Click a tile to edit its text, colours and picture crop. · Write"/><img src="assets/bento/v2/block-3.png" width="33.3%" align="top" alt="Step 3 · Copy the prompt for your agent, or download a ZIP and push it. · Ship"/><br/><img src="assets/bento/v2/block-4.png" width="59.9%" align="top" alt="What you get"/><a href="https://github.com/IsAmirMmd/nim-byte-readme-maker"><img src="assets/bento/v2/block-5.png" width="39.9%" align="top" alt="The skill behind it"/></a><br/><img src="assets/bento/v2/stack.png" width="99.9%" align="top" alt="Stack: Editor: React 19, Vite 8, dnd-kit, Lucide; Exports: html-to-image, fflate, jsPDF; Server: Vercel functions: link metadata, image proxy; Tiles: bento-readme skill, copied into src/skill"/><br/><picture><source media="(prefers-color-scheme: dark)" srcset="assets/bento/v2/note-1-dark.png"/><img src="assets/bento/v2/note-1.png" width="41.9%" align="top" alt="npm install, then npm run dev · Run it · npm run build writes dist/. Every push to main deploys on Vercel."/></picture><img src="assets/bento/v2/block-6.png" width="57.9%" align="top" alt="What you see on the canvas is what the agent builds: both draw with the skill's own tile code."/><br/><a href="https://nim-byte-bento-grid.vercel.app/"><img src="assets/bento/v2/contact-1.png" width="30.9%" align="top" alt="Editor · nim-byte-bento-grid.vercel.app"/></a><a href="https://github.com/IsAmirMmd/nim-byte-readme-maker"><img src="assets/bento/v2/contact-2.png" width="26.9%" align="top" alt="Skill · nim-byte-readme-maker"/></a><a href="https://nimbyte.ir"><img src="assets/bento/v2/contact-3.png" width="19.9%" align="top" alt="Studio · nimbyte.ir"/></a><a href="https://github.com/IsAmirMmd"><img src="assets/bento/v2/contact-4.png" width="21.9%" align="top" alt="Author · @IsAmirMmd"/></a></p>
+<!-- bento:end -->
 
 ## Run it
 
@@ -30,10 +12,20 @@ npm install
 npm run dev
 ```
 
-`npm run build` writes `dist/`; Vercel builds it as is (Vite preset).
+`npm run build` writes `dist/`; every push to `main` deploys on Vercel.
 
-## Credits
+## This README
 
-Made by [Amirmohammad Lotfipour](https://github.com/IsAmirMmd) for [نیم‌بایت](https://nimbyte.ir). Fonts:
-[Vazirmatn](https://github.com/rastikerdar/vazirmatn) and [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono)
+It's a bento grid made with the [bento-readme skill](https://github.com/IsAmirMmd/nim-byte-readme-maker), from
+`.bento/profile.json` (the screenshot is `.bento/images/workspace.png`). To change it, edit the profile (or open it in
+the editor with *Import profile.json*), then:
+
+```bash
+node <path-to-the-skill>/skills/bento-readme/scripts/init.mjs .
+```
+```bash
+node .bento/scripts/build.mjs
+```
+
+Fonts: [Vazirmatn](https://github.com/rastikerdar/vazirmatn) and [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono)
 (SIL Open Font License 1.1). Icons: [Lucide](https://lucide.dev).

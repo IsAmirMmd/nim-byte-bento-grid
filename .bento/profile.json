@@ -1,0 +1,219 @@
+{
+  "github": "IsAmirMmd",
+  "lang": "en",
+  "stats": false,
+  "hero": {
+    "label": "nim-byte-bento-grid",
+    "title": "Build your GitHub README as a bento grid.",
+    "lead": "Drag tiles, size them, write their text, then hand one prompt (or a ZIP) to your AI agent. This README was made the same way.",
+    "chips": [
+      "React 19",
+      "Vite",
+      "dnd-kit",
+      "Persian & English"
+    ]
+  },
+  "feature": {
+    "label": "Try it",
+    "title": "Open the editor",
+    "text": "Free, in your browser, with nothing to sign up for. Persian or English.",
+    "href": "https://nim-byte-bento-grid.vercel.app/"
+  },
+  "projects": [
+    {
+      "title": "The workspace",
+      "text": "The tile list, the README as it will look, and the panel for the selected tile",
+      "image": "images/workspace.png",
+      "href": "https://nim-byte-bento-grid.vercel.app/#workspace"
+    }
+  ],
+  "stack": [
+    {
+      "group": "Editor",
+      "items": [
+        "React 19",
+        "Vite 8",
+        "dnd-kit",
+        "Lucide"
+      ]
+    },
+    {
+      "group": "Exports",
+      "items": [
+        "html-to-image",
+        "fflate",
+        "jsPDF"
+      ]
+    },
+    {
+      "group": "Server",
+      "items": [
+        "Vercel functions: link metadata, image proxy"
+      ]
+    },
+    {
+      "group": "Tiles",
+      "items": [
+        "bento-readme skill, copied into src/skill"
+      ]
+    }
+  ],
+  "contacts": [
+    {
+      "label": "Editor",
+      "value": "nim-byte-bento-grid.vercel.app",
+      "href": "https://nim-byte-bento-grid.vercel.app/"
+    },
+    {
+      "label": "Skill",
+      "value": "nim-byte-readme-maker",
+      "href": "https://github.com/IsAmirMmd/nim-byte-readme-maker"
+    },
+    {
+      "label": "Studio",
+      "value": "nimbyte.ir",
+      "href": "https://nimbyte.ir"
+    },
+    {
+      "label": "Author",
+      "value": "@IsAmirMmd",
+      "href": "https://github.com/IsAmirMmd"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "number",
+      "label": "Step 1",
+      "value": "Arrange",
+      "text": "Drag tiles anywhere, drag an edge to resize, pick new ones from the list.",
+      "tone": "paper"
+    },
+    {
+      "type": "number",
+      "label": "Step 2",
+      "value": "Write",
+      "text": "Click a tile to edit its text, colours and picture crop.",
+      "tone": "paper"
+    },
+    {
+      "type": "number",
+      "label": "Step 3",
+      "value": "Ship",
+      "text": "Copy the prompt for your agent, or download a ZIP and push it.",
+      "tone": "accent-soft"
+    },
+    {
+      "type": "chips",
+      "label": "What you get",
+      "items": [
+        "Drag & drop with live preview",
+        "20 kinds of tile",
+        "10 palettes, any colour",
+        "Crop, zoom and masks",
+        "Music, repo and video from a link",
+        "PNG, PDF, push-ready ZIP",
+        "Right to left and left to right"
+      ],
+      "tone": "paper"
+    },
+    {
+      "type": "repo",
+      "label": "The skill behind it",
+      "repo": "IsAmirMmd/nim-byte-readme-maker",
+      "description": "Makes the README with any AI agent: Claude Code, Codex, Cursor, Copilot, Gemini CLI.",
+      "language": "JavaScript",
+      "color": "#f1e05a",
+      "href": "https://github.com/IsAmirMmd/nim-byte-readme-maker"
+    },
+    {
+      "type": "quote",
+      "text": "What you see on the canvas is what the agent builds: both draw with the skill's own tile code.",
+      "author": "How it stays honest",
+      "tone": "blue"
+    }
+  ],
+  "layout": [
+    [
+      {
+        "id": "hero",
+        "width": 640
+      },
+      {
+        "id": "feature",
+        "width": 360
+      }
+    ],
+    [
+      {
+        "id": "work-1",
+        "width": 1000
+      }
+    ],
+    [
+      {
+        "id": "block-1",
+        "width": 333
+      },
+      {
+        "id": "block-2",
+        "width": 333
+      },
+      {
+        "id": "block-3",
+        "width": 334
+      }
+    ],
+    [
+      {
+        "id": "block-4",
+        "width": 600
+      },
+      {
+        "id": "block-5",
+        "width": 400
+      }
+    ],
+    [
+      {
+        "id": "stack",
+        "width": 1000
+      }
+    ],
+    [
+      {
+        "id": "note-1",
+        "width": 420
+      },
+      {
+        "id": "block-6",
+        "width": 580
+      }
+    ],
+    [
+      {
+        "id": "contact-1",
+        "width": 310
+      },
+      {
+        "id": "contact-2",
+        "width": 270
+      },
+      {
+        "id": "contact-3",
+        "width": 200
+      },
+      {
+        "id": "contact-4",
+        "width": 220
+      }
+    ]
+  ],
+  "notes": [
+    {
+      "label": "Run it",
+      "title": "npm install, then npm run dev",
+      "text": "npm run build writes dist/. Every push to main deploys on Vercel.",
+      "tone": "ink"
+    }
+  ]
+}
